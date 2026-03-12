@@ -1,0 +1,45 @@
+# PapaLevel project-local Codex multi-agent configuration
+
+[features]
+multi_agent = true
+child_agents_md = true
+
+[agents."pm-orchestrator"]
+description = "Orchestrates the PapaLevel MVP PM workflow across research, problem framing, PRD, UX, tech direction, task breakdown, and launch QA."
+config_file = "agents/pm-orchestrator.toml"
+
+[agents."trend-research"]
+description = "Researches market trends, competitors, viral patterns, and platform shifts relevant to PapaLevel."
+config_file = "agents/trend-research.toml"
+
+[agents."user-research"]
+description = "Researches PapaLevel target users, pain points, behaviors, and monetization signals."
+config_file = "agents/user-research.toml"
+
+[agents."problem-definition"]
+description = "Turns research inputs into a sharply scoped PapaLevel problem definition and priority model."
+config_file = "agents/problem-definition.toml"
+
+[agents.prd]
+description = "Converts the problem definition into a scoped PRD with MVP boundaries and success metrics."
+config_file = "agents/prd.toml"
+
+[agents."ux-flow"]
+description = "Translates the PRD into information architecture, screen inventory, and key user flows."
+config_file = "agents/ux-flow.toml"
+
+[agents."tech-stack"]
+description = "Recommends a practical implementation stack, architecture boundaries, and risk mitigations for PapaLevel."
+config_file = "agents/tech-stack.toml"
+
+[agents."frontend-designer"]
+description = "Uses the oh-my-codex designer approach to turn PapaLevel UX and tech decisions into implementable frontend UI structure."
+config_file = "agents/frontend-designer.toml"
+
+[agents."task-breakdown"]
+description = "Breaks the PapaLevel MVP into backlog items, tickets, dependencies, and acceptance criteria."
+config_file = "agents/task-breakdown.toml"
+
+[agents."qa-release-readiness"]
+description = "Checks launch readiness across functional QA, mobile browser behavior, sharing, analytics, and release criteria."
+config_file = "agents/qa-release-readiness.toml"

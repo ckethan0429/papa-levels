@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #122030;
+  --paper: #f8f1e7;
+  --ember: #ef6a2d;
+  --mist: #eef1ef;
+  --lime: #b6e957;
+  --plum: #4a395f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(239, 106, 45, 0.16), transparent 24%),
+    radial-gradient(circle at right top, rgba(182, 233, 87, 0.16), transparent 20%),
+    linear-gradient(180deg, #fffaf4 0%, #f4ede3 100%);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+a,
+input,
+summary {
+  touch-action: manipulation;
+}
+
+/* WCAG 2.1 SC 1.4.11: focus indicator must achieve 3:1 contrast ratio */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--ember);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(239, 106, 45, 0.18);
+}
+
+.safe-pad {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
+}
+
+/* Skip-to-content link — visually hidden until focused */
+.skip-link {
+  position: absolute;
+  top: -9999px;
+  left: 0.5rem;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}

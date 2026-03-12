@@ -1,0 +1,290 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1773278958419,
+  "projectRoot": "/Users/ckahn/Desktop/papa",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "next",
+        "version": "16.1.6",
+        "category": "fullstack"
+      },
+      {
+        "name": "react",
+        "version": "19.2.4",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "19.2.4",
+        "category": "frontend"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": null,
+    "lintCommand": "npm run lint",
+    "devCommand": "npm run dev",
+    "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start",
+      "lint": "eslint ."
+    }
+  },
+  "conventions": {
+    "namingStyle": "camelCase",
+    "importStyle": "ES modules",
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "app",
+      "components",
+      "lib"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "agent": {
+      "path": "agent",
+      "purpose": null,
+      "fileCount": 12,
+      "lastAccessed": 1773278958365,
+      "keyFiles": [
+        "README.md",
+        "frontend-designer-agent.md",
+        "operating-rules.md",
+        "pm-orchestrator-agent.md",
+        "prd-agent.md"
+      ]
+    },
+    "app": {
+      "path": "app",
+      "purpose": "Application code",
+      "fileCount": 3,
+      "lastAccessed": 1773278958366,
+      "keyFiles": [
+        "globals.css",
+        "layout.tsx",
+        "page.tsx"
+      ]
+    },
+    "components": {
+      "path": "components",
+      "purpose": "UI components",
+      "fileCount": 0,
+      "lastAccessed": 1773278958371,
+      "keyFiles": []
+    },
+    "lib": {
+      "path": "lib",
+      "purpose": "Library code",
+      "fileCount": 2,
+      "lastAccessed": 1773278958372,
+      "keyFiles": [
+        "papa-data.ts",
+        "utils.ts"
+      ]
+    },
+    "prd": {
+      "path": "prd",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1773278958372,
+      "keyFiles": [
+        "v1-papalevel-problem-definition-prd.md",
+        "v2-papalevel-prd.md"
+      ]
+    },
+    "prompts": {
+      "path": "prompts",
+      "purpose": null,
+      "fileCount": 6,
+      "lastAccessed": 1773278958372,
+      "keyFiles": [
+        "README.md",
+        "main-agent-frontend-designer-fd.md",
+        "main-agent-pm-orchestrator-team.md",
+        "main-agent-pm-orchestrator.md",
+        "main-agent-specialist-direct.md"
+      ]
+    },
+    "research": {
+      "path": "research",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1773278958372,
+      "keyFiles": [
+        "papalevel-research-history.md"
+      ]
+    },
+    "tasks": {
+      "path": "tasks",
+      "purpose": null,
+      "fileCount": 13,
+      "lastAccessed": 1773278958372,
+      "keyFiles": [
+        "README.md",
+        "mvp-backlog.md",
+        "ticket-001-foundation-ia-and-shared-contracts.md",
+        "ticket-002-checklist-data-model-and-content-schema.md",
+        "ticket-003-checklist-experience-and-d-day-flow.md"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "prd",
+      "accessCount": 2,
+      "lastAccessed": 1773278984793,
+      "type": "directory"
+    },
+    {
+      "path": "prd/v2-papalevel-prd.md",
+      "accessCount": 2,
+      "lastAccessed": 1773278993880,
+      "type": "file"
+    },
+    {
+      "path": "tasks/mvp-backlog.md",
+      "accessCount": 2,
+      "lastAccessed": 1773279005565,
+      "type": "file"
+    },
+    {
+      "path": ".omx/state/team/papalevel-pm-orchestration-run/workers/worker-2/inbox.md",
+      "accessCount": 2,
+      "lastAccessed": 1773279246367,
+      "type": "file"
+    },
+    {
+      "path": ".omx/state/team/papalevel-pm-orchestration-run/workers/worker-3/inbox.md",
+      "accessCount": 2,
+      "lastAccessed": 1773279250664,
+      "type": "file"
+    },
+    {
+      "path": ".omx/state/team/papalevel-pm-orchestration-run/tasks/task-2.json",
+      "accessCount": 1,
+      "lastAccessed": 1773278972355,
+      "type": "file"
+    },
+    {
+      "path": "tasks",
+      "accessCount": 1,
+      "lastAccessed": 1773278972866,
+      "type": "directory"
+    },
+    {
+      "path": "tasks/ticket-003-checklist-experience-and-d-day-flow.md",
+      "accessCount": 1,
+      "lastAccessed": 1773278976439,
+      "type": "file"
+    },
+    {
+      "path": "tasks/ticket-006-budget-simulator-v1.md",
+      "accessCount": 1,
+      "lastAccessed": 1773278976812,
+      "type": "file"
+    },
+    {
+      "path": "tasks/ticket-007-quiz-v1-and-pre-dad-mode.md",
+      "accessCount": 1,
+      "lastAccessed": 1773278976976,
+      "type": "file"
+    },
+    {
+      "path": ".omx/state/team/papalevel-pm-orchestration-run/tasks/task-3.json",
+      "accessCount": 1,
+      "lastAccessed": 1773278984653,
+      "type": "file"
+    },
+    {
+      "path": "research",
+      "accessCount": 1,
+      "lastAccessed": 1773278984839,
+      "type": "directory"
+    },
+    {
+      "path": "prd/v1-papalevel-problem-definition-prd.md",
+      "accessCount": 1,
+      "lastAccessed": 1773278994285,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 1,
+      "lastAccessed": 1773278995718,
+      "type": "directory"
+    },
+    {
+      "path": "tasks/ticket-005-share-system-and-send-to-husband-flows.md",
+      "accessCount": 1,
+      "lastAccessed": 1773279005569,
+      "type": "file"
+    },
+    {
+      "path": "tasks/ticket-009-policy-and-support-data-operations.md",
+      "accessCount": 1,
+      "lastAccessed": 1773279005575,
+      "type": "file"
+    },
+    {
+      "path": "research/wireframes/checklist.md",
+      "accessCount": 1,
+      "lastAccessed": 1773279044558,
+      "type": "file"
+    },
+    {
+      "path": "research/wireframes/checklist-admin.md",
+      "accessCount": 1,
+      "lastAccessed": 1773279089901,
+      "type": "file"
+    },
+    {
+      "path": "prompts/korean-copy-v1.md",
+      "accessCount": 1,
+      "lastAccessed": 1773279114984,
+      "type": "file"
+    },
+    {
+      "path": "research/wireframes/budget.md",
+      "accessCount": 1,
+      "lastAccessed": 1773279142615,
+      "type": "file"
+    },
+    {
+      "path": "research/wireframes/quiz.md",
+      "accessCount": 1,
+      "lastAccessed": 1773279197234,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
