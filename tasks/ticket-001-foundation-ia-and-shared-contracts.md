@@ -1,9 +1,10 @@
 # T-001 Foundation / IA / Shared Contracts
 
-- Status: `todo`
+- Status: `done`
 - Priority: `P0`
 - Phase: `MVP Week 1`
 - Depends on: `None`
+- GitHub Issue: [#1](https://github.com/ckethan0429/papa-levels/issues/1)
 
 ## Goal
 
@@ -100,10 +101,12 @@
 
 - `tasks/ticket-001-foundation-ia-and-shared-contracts.md` — 구현 기준 문서 원본
 - `docs/adr/001-foundation-ia-and-contracts.md` — route map / D-Day / fallback ADR 후보
-- `src/lib/domain/context.ts` — 공용 입력값 계약 후보
-- `src/lib/domain/events.ts` — GA4 event spec 후보
-- `src/lib/domain/share.ts` — share fallback matrix 후보
-- `src/lib/domain/routes.ts` — route/deeplink 상수 후보
+- `lib/papa-data.ts` — 현재 공용 데이터/타입 집합이 모여 있는 구현 기준점
+- `lib/` 하위 신규 모듈 — `context`, `events`, `share`, `routes`를 추후 분리할 경우의 권장 위치
+
+## Created Artifacts (2026-03-12)
+
+- ADR: [001-foundation-ia-and-contracts.md](/Users/ckahn/Desktop/papa/docs/adr/001-foundation-ia-and-contracts.md)
 
 ## Scope
 

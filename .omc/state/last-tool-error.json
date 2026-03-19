@@ -1,7 +1,7 @@
 {
   "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"omx team api transition-task-status --input '{\\\"team_name\\\":\\\"papalevel-pm-orchestration-run\\\",\\\"task_id\\\":\\\"2\\\",\\\"worker\\\":\\\"worker-2\\\",\\\"from_status\\\":\\\"in_progress\\\",\\\"to_status\\\":\\\"com...",
-  "error": "Exit code 1\n{\"schema_version\":\"1.0\",\"timestamp\":\"2026-03-12T01:33:24.787Z\",\"command\":\"omx team api transition-task-status\",\"ok\":false,\"operation\":\"transition-task-status\",\"error\":{\"code\":\"invalid_input\",\"message\":\"team_name, task_id, from, to, claim_token are required\"}}",
-  "timestamp": "2026-03-12T01:33:24.904Z",
+  "tool_input_preview": "{\"command\":\"omx team api transition-task-status --input '{\\\"team_name\\\":\\\"papalevel-pm-workflow-ready-st\\\",\\\"task_id\\\":\\\"2\\\",\\\"from_status\\\":\\\"in_progress\\\",\\\"to_status\\\":\\\"completed\\\",\\\"worker\\\":\\\"wo...",
+  "error": "Exit code 1\n{\"schema_version\":\"1.0\",\"timestamp\":\"2026-03-12T02:56:31.906Z\",\"command\":\"omx team api transition-task-status\",\"ok\":false,\"operation\":\"transition-task-status\",\"error\":{\"code\":\"invalid_input\",\"message\":\"team_name, task_id, from, to, claim_token are required\"}}",
+  "timestamp": "2026-03-12T02:56:32.001Z",
   "retry_count": 1
 }

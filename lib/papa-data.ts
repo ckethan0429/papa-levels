@@ -23,13 +23,14 @@ export type DeadlineItem = {
   effectiveDate: string;
   verifiedAt: string;
   regionScope: string;
+  regionNotice: string;
   state: DeadlineState;
 };
 
 export const routeContext = [
   { label: "상태", value: "출산 예정" },
   { label: "기준일", value: "2026.03.23" },
-  { label: "지역", value: "서울" },
+  { label: "지역", value: "한국" },
   { label: "가구", value: "맞벌이" }
 ];
 
@@ -41,7 +42,7 @@ export const weeklyTodos = [
 
 export const checklistTabs: Array<{ key: ChecklistTab; label: string; helper: string }> = [
   { key: "prepare", label: "준비", helper: "D-30 ~ D-Day" },
-  { key: "center", label: "조리원", helper: "D-Day ~ D+14" },
+  { key: "center", label: "조리원", helper: "D-Day ~ D+13" },
   { key: "home", label: "집", helper: "D+14 ~ D+30" },
   { key: "admin", label: "행정", helper: "기한 기반" }
 ];
@@ -126,6 +127,7 @@ export const adminDeadlines: DeadlineItem[] = [
     effectiveDate: "기준일 2026.01.01",
     verifiedAt: "최종 검수 2026.03.11",
     regionScope: "전국",
+    regionNotice: "한국 일반 기준을 먼저 보여주고, 지역별 상세 조건은 추후 확장합니다.",
     state: "soon"
   },
   {
@@ -138,6 +140,7 @@ export const adminDeadlines: DeadlineItem[] = [
     effectiveDate: "기준일 2026.01.01",
     verifiedAt: "최종 검수 2026.03.11",
     regionScope: "전국",
+    regionNotice: "한국 일반 기준을 먼저 보여주고, 지역별 상세 조건은 추후 확장합니다.",
     state: "today"
   },
   {
@@ -150,9 +153,12 @@ export const adminDeadlines: DeadlineItem[] = [
     effectiveDate: "기준일 2026.01.01",
     verifiedAt: "최종 검수 2026.03.11",
     regionScope: "전국",
+    regionNotice: "한국 일반 기준을 먼저 보여주고, 지역별 상세 조건은 추후 확장합니다.",
     state: "upcoming"
   }
 ];
+
+export const visibleAdminDeadlines = adminDeadlines.filter((item) => item.regionScope === "전국");
 
 export const budgetSummary = {
   hero: "산후조리원만 평균 287만 원",

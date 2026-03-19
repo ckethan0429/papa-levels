@@ -157,6 +157,46 @@ Trend Research
 
 독립적인 작업을 동시에 돌릴 때는 `$team`을 쓴다.
 
+### `$team`을 쓰기 전에 반드시 맞아야 하는 조건
+
+- leader는 `tmux 안의 실제 agent pane`이어야 한다.
+- detached session 안에서 `omx team ...; exec zsh`처럼 shell이 leader 역할을 대신하게 두면 안 된다.
+- leader workspace는 clean 상태여야 한다.
+- launch prompt는 lane별 ownership이 분명한 번호 목록으로 쓴다.
+
+안전한 launch 예시:
+
+```text
+1. worker-1: checklist route foundation
+2. worker-2: admin timeline and national-only visibility
+3. worker-3: sticky CTA -> single primary CTA + share surface
+```
+
+피해야 할 launch 예시:
+
+```text
+PapaLevel PM orchestrator-supervised implementation start...
+```
+
+이유:
+- prose-heavy prompt는 OMX auto decomposition이 `implement / test / review`처럼 원래 의도와 다른 task로 재분해할 가능성이 있다.
+- shell leader는 mailbox 알림 문자열을 실제 shell command로 실행해 control plane을 깨뜨릴 수 있다.
+
+### `$team` 성공 판정 기준
+
+`Team started` 출력만으로는 부족하다. 시작 직후 아래를 같이 확인한다.
+
+- worker pane이 welcome 화면이 아니라 inbox 처리 단계로 넘어갔는지
+- `leader-fixed` mailbox에 worker startup ACK가 들어왔는지
+- `task-*.json`이 `pending`에서 `in_progress`로 바뀌었는지
+- 첫 launch에서는 가능하면 `Claude worker` 또는 1-worker smoke로 launch path를 먼저 검증하는지
+
+셋 중 하나라도 안 되면:
+
+1. broken team을 shutdown 또는 abort
+2. tmux/session/state cleanup
+3. launch prompt와 leader topology를 바로잡고 재실행
+
 ### 예시 A — 병렬 조사
 
 요청:
@@ -220,6 +260,13 @@ OMX_TEAM_WORKER_CLI_MAP=claude,codex,codex omx team 3:frontend-designer "<task>"
   - worker-1: 디자인 초안/프론트 polish
   - worker-2: 코드 통합
   - worker-3: 검증
+
+### PapaLevel에서 실제로 재현된 실패 패턴
+
+- `Codex worker` 자체보다 `shell leader`가 먼저 깨지는 경우가 더 위험하다.
+- 이 머신에서는 `Codex worker` startup evidence가 불안정할 수 있으므로, 첫 `$team` launch는 `Claude worker` 또는 smoke lane으로 gate 하는 편이 안전하다.
+- mailbox 알림이 leader shell에 자연어 그대로 주입되면 `Read ...`가 shell command로 실행되어 loop가 난다.
+- task state가 계속 `pending`인데 mailbox에 `INTEGRATED`만 반복되면 orchestration bookkeeping이 꼬인 상태로 보고 즉시 중단한다.
 
 ---
 

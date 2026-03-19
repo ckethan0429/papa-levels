@@ -29,8 +29,12 @@ export function PageFrame({
       <a href="#main-content" className="skip-link">
         본문으로 바로가기
       </a>
-      <main id="main-content" className="min-h-screen bg-grid-fade pb-28 safe-pad">
-        <div className="mx-auto max-w-6xl px-4 pb-8 pt-5 sm:px-6">
+      <main
+        id="main-content"
+        className="min-h-screen bg-grid-fade"
+        style={{ paddingBottom: "calc(5.5rem + env(safe-area-inset-bottom))" }}
+      >
+        <div className="mx-auto max-w-6xl px-4 pb-10 pt-5 sm:px-6">
           <header className="rounded-[28px] border border-white/60 bg-white/80 px-4 py-4 shadow-card backdrop-blur md:px-6">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>

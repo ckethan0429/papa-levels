@@ -44,7 +44,8 @@ export function AdminTimelineCard({ item }: { item: DeadlineItem }) {
         </div>
       </dl>
       <div className="mt-3 rounded-2xl border border-dashed border-ink/10 px-3 py-3 text-sm text-ink/62">
-        지역 범위: {item.regionScope}
+        <p>지역 범위: {item.regionScope}</p>
+        <p className="mt-2 text-ink/52">{item.regionNotice}</p>
       </div>
       <div className="mt-4 flex flex-wrap gap-2">
         <button type="button" className="rounded-full bg-ink px-4 py-2 text-sm font-medium text-paper transition hover:bg-ink/90">

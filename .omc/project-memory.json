@@ -160,6 +160,30 @@
   },
   "hotPaths": [
     {
+      "path": "",
+      "accessCount": 5,
+      "lastAccessed": 1773283529565,
+      "type": "directory"
+    },
+    {
+      "path": "tasks/mvp-backlog.md",
+      "accessCount": 4,
+      "lastAccessed": 1773284023241,
+      "type": "file"
+    },
+    {
+      "path": "prompts/korean-copy-v1.md",
+      "accessCount": 3,
+      "lastAccessed": 1773284034167,
+      "type": "file"
+    },
+    {
+      "path": "tasks/ticket-004-admin-timeline-module.md",
+      "accessCount": 3,
+      "lastAccessed": 1773284165210,
+      "type": "file"
+    },
+    {
       "path": "prd",
       "accessCount": 2,
       "lastAccessed": 1773278984793,
@@ -169,12 +193,6 @@
       "path": "prd/v2-papalevel-prd.md",
       "accessCount": 2,
       "lastAccessed": 1773278993880,
-      "type": "file"
-    },
-    {
-      "path": "tasks/mvp-backlog.md",
-      "accessCount": 2,
-      "lastAccessed": 1773279005565,
       "type": "file"
     },
     {
@@ -190,6 +208,48 @@
       "type": "file"
     },
     {
+      "path": "tasks/ticket-003-checklist-experience-and-d-day-flow.md",
+      "accessCount": 2,
+      "lastAccessed": 1773283523785,
+      "type": "file"
+    },
+    {
+      "path": "research/wireframes/checklist.md",
+      "accessCount": 2,
+      "lastAccessed": 1773283528493,
+      "type": "file"
+    },
+    {
+      "path": ".omx/state/team/papalevel-pm-workflow-next-sta/workers/worker-3/inbox.md",
+      "accessCount": 2,
+      "lastAccessed": 1773283741732,
+      "type": "file"
+    },
+    {
+      "path": "research/wireframes/checklist-admin.md",
+      "accessCount": 2,
+      "lastAccessed": 1773284033881,
+      "type": "file"
+    },
+    {
+      "path": "tasks/ticket-001-foundation-ia-and-shared-contracts.md",
+      "accessCount": 2,
+      "lastAccessed": 1773284034596,
+      "type": "file"
+    },
+    {
+      "path": "tasks/ticket-002-checklist-data-model-and-content-schema.md",
+      "accessCount": 2,
+      "lastAccessed": 1773284034941,
+      "type": "file"
+    },
+    {
+      "path": ".omx/state/team/papalevel-pm-workflow-ready-st/workers/worker-2/inbox.md",
+      "accessCount": 2,
+      "lastAccessed": 1773284215993,
+      "type": "file"
+    },
+    {
       "path": ".omx/state/team/papalevel-pm-orchestration-run/tasks/task-2.json",
       "accessCount": 1,
       "lastAccessed": 1773278972355,
@@ -200,12 +260,6 @@
       "accessCount": 1,
       "lastAccessed": 1773278972866,
       "type": "directory"
-    },
-    {
-      "path": "tasks/ticket-003-checklist-experience-and-d-day-flow.md",
-      "accessCount": 1,
-      "lastAccessed": 1773278976439,
-      "type": "file"
     },
     {
       "path": "tasks/ticket-006-budget-simulator-v1.md",
@@ -238,12 +292,6 @@
       "type": "file"
     },
     {
-      "path": "",
-      "accessCount": 1,
-      "lastAccessed": 1773278995718,
-      "type": "directory"
-    },
-    {
       "path": "tasks/ticket-005-share-system-and-send-to-husband-flows.md",
       "accessCount": 1,
       "lastAccessed": 1773279005569,
@@ -256,24 +304,6 @@
       "type": "file"
     },
     {
-      "path": "research/wireframes/checklist.md",
-      "accessCount": 1,
-      "lastAccessed": 1773279044558,
-      "type": "file"
-    },
-    {
-      "path": "research/wireframes/checklist-admin.md",
-      "accessCount": 1,
-      "lastAccessed": 1773279089901,
-      "type": "file"
-    },
-    {
-      "path": "prompts/korean-copy-v1.md",
-      "accessCount": 1,
-      "lastAccessed": 1773279114984,
-      "type": "file"
-    },
-    {
       "path": "research/wireframes/budget.md",
       "accessCount": 1,
       "lastAccessed": 1773279142615,
@@ -283,6 +313,42 @@
       "path": "research/wireframes/quiz.md",
       "accessCount": 1,
       "lastAccessed": 1773279197234,
+      "type": "file"
+    },
+    {
+      "path": ".omx/state/team/papalevel-pm-workflow-next-sta/tasks/task-3.json",
+      "accessCount": 1,
+      "lastAccessed": 1773283512512,
+      "type": "file"
+    },
+    {
+      "path": "docs/content/checklist-input-guide.md",
+      "accessCount": 1,
+      "lastAccessed": 1773283665972,
+      "type": "file"
+    },
+    {
+      "path": ".omx/state/team/papalevel-pm-workflow-next-sta/workers/worker-3/shutdown-ack.json",
+      "accessCount": 1,
+      "lastAccessed": 1773283746674,
+      "type": "file"
+    },
+    {
+      "path": "content/policy/benefits.json",
+      "accessCount": 1,
+      "lastAccessed": 1773284042406,
+      "type": "file"
+    },
+    {
+      "path": "docs/adr/001-foundation-ia-and-contracts.md",
+      "accessCount": 1,
+      "lastAccessed": 1773284042681,
+      "type": "file"
+    },
+    {
+      "path": ".omx/state/team/papalevel-pm-workflow-ready-st/mailbox/worker-2.json",
+      "accessCount": 1,
+      "lastAccessed": 1773284096638,
       "type": "file"
     }
   ],

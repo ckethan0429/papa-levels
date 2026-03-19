@@ -6,8 +6,8 @@
 
 | ID | 우선순위 | 상태 | 제목 | 권장 시점 | 선행 티켓 |
 |----|----------|------|------|-----------|-----------|
-| T-001 | P0 | todo | Foundation / IA / Shared Contracts | 1주차 | - |
-| T-002 | P0 | todo | Checklist Data Model and Content Schema | 1주차 | T-001 |
+| T-001 | P0 | done | Foundation / IA / Shared Contracts | 1주차 | - |
+| T-002 | P0 | done | Checklist Data Model and Content Schema | 1주차 | T-001 |
 | T-003 | P0 | todo | Checklist Experience and D-Day Flow | 2주차 | T-001, T-002 |
 | T-004 | P0 | todo | Admin Timeline Module | 2주차 | T-001, T-002 |
 | T-005 | P0 | todo | Share System and Send-to-Husband Flows | 2주차 | T-003, T-004 |
@@ -17,6 +17,53 @@
 | T-009 | P1 | todo | Policy/Support Data Operations | 3~4주차 | T-002, T-004, T-006 |
 | T-010 | P1 | todo | Launch QA and Release Checklist | 4주차 | T-003, T-004, T-005, T-006, T-007, T-008, T-009 |
 | T-011 | P2 | todo | Paid Pack Experiment | MVP 후 | T-003, T-004, T-005, T-008 |
+
+## Local Status Source Of Truth (2026-03-19)
+
+- 이 파일의 `상태` 컬럼이 로컬 문서 백로그의 단일 기준이다.
+- 상태 값은 [tasks/README.md](/Users/ckahn/Desktop/papa/tasks/README.md)의 규칙(`todo`, `doing`, `blocked`, `done`)만 사용한다.
+- GitHub Project의 `Workflow` 필드는 운영 보드 상태를 보여주는 보조 신호다. 로컬 `done`과 GitHub `Review`가 동시에 존재할 수 있다.
+- `T-001`, `T-002`는 아래 산출물이 존재하므로 로컬 문서 기준 `done`으로 본다:
+  - [001-foundation-ia-and-contracts.md](/Users/ckahn/Desktop/papa/docs/adr/001-foundation-ia-and-contracts.md)
+  - [items.json](/Users/ckahn/Desktop/papa/content/checklist/items.json)
+  - [benefits.json](/Users/ckahn/Desktop/papa/content/policy/benefits.json)
+  - [checklist-input-guide.md](/Users/ckahn/Desktop/papa/docs/content/checklist-input-guide.md)
+- `T-003`, `T-004`는 착수 가능 상태이지만 아직 구현 시작 전이므로 로컬 상태는 `todo`로 유지한다.
+
+## GitHub Tracking (2026-03-12)
+
+| ID | GitHub Issue |
+|----|--------------|
+| T-001 | [#1](https://github.com/ckethan0429/papa-levels/issues/1) |
+| T-002 | [#2](https://github.com/ckethan0429/papa-levels/issues/2) |
+| T-003 | [#3](https://github.com/ckethan0429/papa-levels/issues/3) |
+| T-004 | [#4](https://github.com/ckethan0429/papa-levels/issues/4) |
+| T-005 | [#5](https://github.com/ckethan0429/papa-levels/issues/5) |
+| T-006 | [#6](https://github.com/ckethan0429/papa-levels/issues/6) |
+| T-007 | [#7](https://github.com/ckethan0429/papa-levels/issues/7) |
+| T-008 | [#8](https://github.com/ckethan0429/papa-levels/issues/8) |
+| T-009 | [#9](https://github.com/ckethan0429/papa-levels/issues/9) |
+| T-010 | [#10](https://github.com/ckethan0429/papa-levels/issues/10) |
+
+## GitHub Operations (2026-03-12)
+
+- Project Board: [PapaLevel MVP Board](https://github.com/users/ckethan0429/projects/1)
+- Milestones:
+  - `MVP Week 1` = `T-001 ~ T-002`
+  - `MVP Week 2` = `T-003 ~ T-005`
+  - `MVP Week 3` = `T-006 ~ T-007`
+  - `MVP Week 4` = `T-008 ~ T-010`
+  - `Post-MVP` = `T-011+`
+- Labels:
+  - priority: `P0`, `P1`, `P2`
+  - stage: `stage:foundation`, `stage:checklist`, `stage:admin`, `stage:share`, `stage:budget`, `stage:quiz`, `stage:analytics`, `stage:policy`, `stage:qa`
+  - risk: `risk:kakao`, `risk:policy`, `risk:ux`, `risk:performance`
+- Project workflow field:
+  - `Review`: `T-001`, `T-002`
+  - `Ready`: `T-003`, `T-004`
+  - `Backlog`: `T-005 ~ T-010`
+- 로컬 문서 상태는 이 파일의 `상태` 컬럼을 우선 사용하고, GitHub `Workflow`는 보드 운영용으로 해석한다.
+- GitHub 기본 `Status`는 작업 시작 시 `In Progress`, 완료 시 `Done`으로 갱신한다.
 
 ## 구현 원칙
 
@@ -112,6 +159,12 @@
 - 현재 stage는 `T-001/T-002 고정 완료 -> 4개 핵심 화면 wireframe 확보 -> copy draft 확보 -> frontend implementation prep 진입 가능`으로 본다.
 - 이번 단계의 목적은 상위 결정을 다시 바꾸는 것이 아니라, `T-003 ~ T-007` 구현 티켓에 wireframe/copy 입력을 연결하고 공통 컴포넌트 경계를 선명하게 만드는 것이다.
 
+## Current Snapshot (2026-03-19)
+
+- 로컬 문서 기준 완료 티켓은 `T-001`, `T-002`다.
+- 다음 실행 큐는 `T-003`, `T-004`다.
+- 현재 저장소 단계는 `frontend implementation prep -> checklist/admin implementation start`로 해석한다.
+
 ### Decisions
 
 **검증된 사실**
@@ -130,7 +183,7 @@
 ### Risks / Open Questions
 
 - `iOS Kakao in-app fallback` 상세 동작과 안내 카피는 실기기 검증 전까지 열어둬야 한다.
-- `region_scope` enum은 전국/서울/로컬 코드 수준에서 운영 가능한지 한 번 더 점검이 필요하다.
+- MVP 첫 구현에서는 `region`을 `한국` 고정값으로 두고 `national` 기준 항목만 사용자 노출 대상으로 삼는다. 지역 세분화는 추후 논의한다.
 - `/checklist` sticky CTA, `/budget` long scroll, `/quiz` card generation 성능은 모두 구현 리스크이자 QA 선행 항목이다.
 - `D등급` 공유 카피는 실제 공유 맥락에서 거부감이 생길 가능성이 있어 톤 검증이 필요하다.
 
@@ -169,6 +222,6 @@
 
 ## GitHub Issues 변환 순서
 
-1. T-001 ~ T-005를 먼저 이슈화
-2. T-006 ~ T-010을 구현 리소스에 맞춰 분리
+1. T-001 ~ T-005 이슈화 완료
+2. T-006 ~ T-010 이슈화 완료
 3. T-011은 MVP 지표 확인 후 이슈화

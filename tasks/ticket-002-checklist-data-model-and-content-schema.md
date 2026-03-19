@@ -1,9 +1,10 @@
 # T-002 Checklist Data Model and Content Schema
 
-- Status: `todo`
+- Status: `done`
 - Priority: `P0`
 - Phase: `MVP Week 1`
 - Depends on: `T-001`
+- GitHub Issue: [#2](https://github.com/ckethan0429/papa-levels/issues/2)
 
 ## Goal
 
@@ -105,9 +106,15 @@
 - `tasks/ticket-002-checklist-data-model-and-content-schema.md` — 데이터 계약 원본
 - `content/checklist/items.json` — 4축 체크리스트 seed data 후보
 - `content/policy/benefits.json` — 정책/지원금 seed data 후보
-- `src/lib/domain/checklist.ts` — `ChecklistItem` 타입 및 변환기 후보
-- `src/lib/domain/policy.ts` — `PolicyBenefit` 타입 및 메타데이터 검증 후보
+- `lib/papa-data.ts` — 현재 체크리스트/정책 타입 및 데모 데이터가 모여 있는 구현 기준점
+- `lib/` 하위 신규 모듈 — `checklist`, `policy` 타입/검증 로직을 추후 분리할 경우의 권장 위치
 - `docs/content/checklist-input-guide.md` — 운영 입력 가이드 후보
+
+## Created Artifacts (2026-03-12)
+
+- Seed data: [items.json](/Users/ckahn/Desktop/papa/content/checklist/items.json)
+- Seed data: [benefits.json](/Users/ckahn/Desktop/papa/content/policy/benefits.json)
+- Input guide: [checklist-input-guide.md](/Users/ckahn/Desktop/papa/docs/content/checklist-input-guide.md)
 
 ## Scope
 

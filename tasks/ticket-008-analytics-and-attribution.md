@@ -4,6 +4,7 @@
 - Priority: `P0`
 - Phase: `MVP Week 3~4`
 - Depends on: `T-003`, `T-004`, `T-005`, `T-006`, `T-007`
+- GitHub Issue: [#8](https://github.com/ckethan0429/papa-levels/issues/8)
 
 ## Goal
 

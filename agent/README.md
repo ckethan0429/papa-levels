@@ -53,6 +53,14 @@
   - `N:agent-type`는 역할 프롬프트를 고르는 값이고
   - `OMX_TEAM_WORKER_CLI` 또는 `OMX_TEAM_WORKER_CLI_MAP`가 실제 worker CLI를 고른다.
 
+## Team Launch Checklist
+
+- `tmux` 안의 live agent leader pane인지 먼저 확인한다.
+- leader workspace가 clean한지 먼저 확인한다.
+- `$team` prompt는 worker별 file ownership이 드러나는 numbered tasks로 작성한다.
+- launch 직후 `leader-fixed mailbox ACK`, `task in_progress`, `worker pane inbox 처리`를 모두 확인한다.
+- 하나라도 어긋나면 결과를 신뢰하지 말고 해당 run을 cleanup 후 재기동한다.
+
 ## 단계별 입출력 계약
 
 | Stage | 필수 입력 | 출력 | 다음 단계 |

@@ -19,6 +19,9 @@ Operating rules:
 - Do not let downstream agents redefine upstream decisions unless they provide contradictory evidence or a critical implementation constraint.
 - At the end of every stage, produce a short handoff with: decisions, open risks, next required input.
 - Distinguish validated facts, working assumptions, and open questions.
+- If you use OMX team mode, do not launch from a shell-only detached leader pane.
+- Use team mode only when the leader is a live agent pane, the workspace is clean, and the launch prompt is split into numbered worker-owned tasks.
+- After team launch, verify mailbox ACK, worker inbox handling, and task state transition to in_progress before trusting the run.
 
 Preferred output:
 - Current Stage

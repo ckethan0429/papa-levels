@@ -9,11 +9,11 @@ import { PageFrame } from "@/components/papa/page-frame";
 import { ShareDock } from "@/components/papa/share-dock";
 import { StatusBadge } from "@/components/papa/status-badge";
 import {
-  adminDeadlines,
   checklistItems,
   checklistTabs,
   routeContext,
   type ChecklistTab,
+  visibleAdminDeadlines,
   weeklyTodos
 } from "@/lib/papa-data";
 import { cn } from "@/lib/utils";
@@ -116,7 +116,7 @@ export default async function ChecklistPage({
               ))}
             </ol>
           </article>
-          {adminDeadlines.map((item) => (
+          {visibleAdminDeadlines.map((item) => (
             <AdminTimelineCard key={item.id} item={item} />
           ))}
         </section>
