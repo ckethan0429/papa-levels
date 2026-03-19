@@ -52,7 +52,8 @@ tasks/                     MVP backlog and ticket drafts
 
 - As of `2026-03-19`, upstream PM stages are largely locked in documents.
 - `T-001`, `T-002` have document/artifact evidence in `docs/adr/001-foundation-ia-and-contracts.md`, `content/checklist/items.json`, `content/policy/benefits.json`, and `docs/content/checklist-input-guide.md`.
-- Current execution stage is best treated as `frontend implementation prep`, with `T-003`, `T-004` being the next implementation-ready tickets.
+- `T-003`, `T-004`는 `/checklist` route integration과 admin timeline closeout이 main에 반영되어 로컬 문서 기준 `done`으로 본다.
+- Current execution stage is best treated as `share / analytics implementation prep`, with `T-005`, `T-008`, `T-010` being the next implementation-ready tickets.
 - If any task/ticket header conflicts with accepted ADR/spec artifacts, sync the task documents instead of silently treating older headers as authoritative.
 
 ## Working Rules

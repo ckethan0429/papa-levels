@@ -224,10 +224,10 @@
 
 ### Next Handoff
 
-- 다음 단계는 `task-breakdown sync + frontend implementation prep`이다.
-- 입력 문서는 [ticket-001-foundation-ia-and-shared-contracts.md](/Users/ckahn/Desktop/papa/tasks/ticket-001-foundation-ia-and-shared-contracts.md), [ticket-002-checklist-data-model-and-content-schema.md](/Users/ckahn/Desktop/papa/tasks/ticket-002-checklist-data-model-and-content-schema.md), [research/wireframes](/Users/ckahn/Desktop/papa/research/wireframes), [korean-copy-v1.md](/Users/ckahn/Desktop/papa/prompts/korean-copy-v1.md)다.
-- 우선 반영 대상 티켓은 `T-003`, `T-004`, `T-005`, `T-006`, `T-007`, `T-010`이다.
-- 다음 산출물은 `공통 컴포넌트/상태 설계`, `티켓별 UI/input/copy 연결`, `QA 리스크 선반영`이다.
+- 다음 단계는 `T-005 share system + T-008 analytics + T-010 launch QA prep`이다.
+- 입력 문서는 [ticket-003-checklist-experience-and-d-day-flow.md](/Users/ckahn/Desktop/papa/tasks/ticket-003-checklist-experience-and-d-day-flow.md), [ticket-004-admin-timeline-module.md](/Users/ckahn/Desktop/papa/tasks/ticket-004-admin-timeline-module.md), [research/wireframes](/Users/ckahn/Desktop/papa/research/wireframes), [korean-copy-v1.md](/Users/ckahn/Desktop/papa/prompts/korean-copy-v1.md), [001-foundation-ia-and-contracts.md](/Users/ckahn/Desktop/papa/docs/adr/001-foundation-ia-and-contracts.md)다.
+- 우선 반영 대상 티켓은 `T-005`, `T-008`, `T-010`이다.
+- 다음 산출물은 `share payload / fallback 정리`, `GA4 event wiring`, `launch QA carry-forward checklist`다.
 
 ## GitHub Issues 변환 순서
 

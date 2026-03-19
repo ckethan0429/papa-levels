@@ -260,28 +260,27 @@
 
 ## 11. Acceptance Evidence Sync (2026-03-19)
 
-이 섹션은 kickoff 스펙 자체를 바꾸는 것이 아니라, 현재 저장소 구현이 어디까지 상위 스펙을 따라왔는지와 왜 `T-003`, `T-004`를 계속 `doing`으로 두는지 증거 기반으로 정리한다.
+이 섹션은 kickoff 스펙 자체를 바꾸는 것이 아니라, closeout 이후 현재 저장소 구현이 어디까지 상위 스펙을 따라왔는지와 왜 `T-003`, `T-004`를 로컬 문서 기준 `done`으로 볼 수 있는지 증거 기반으로 정리한다.
 
 ### 11-1. validated facts
 
-- `app/checklist/page.tsx`는 `ContextSummaryBar -> 이번 주 아빠 할 일 카드 -> 탭 바 -> checklist/admin 분기 -> ShareDock` 순서의 기본 shell을 갖췄다.
-- `components/papa/share-dock.tsx`는 모바일 기본형 `single primary CTA + share sheet` 패턴을 구현하고 있다.
-- `app/checklist/page.tsx`의 `?tab=admin` 분기가 살아 있어 admin deep link 진입 surface는 이미 보인다.
-- `lib/papa-data.ts`의 `visibleAdminDeadlines` helper가 `regionScope === "전국"` 항목만 노출해 MVP 첫 단계의 national 우선 원칙을 따르고 있다.
-- `components/papa/admin-timeline-card.tsx`는 `channel`, `effectiveDate`, `verifiedAt`, `regionScope`, `regionNotice`를 카드에 표시한다.
+- `/checklist`는 `ChecklistExperienceLoader -> ChecklistExperienceClient` 구조로 분리되어, 온보딩 입력 / localStorage 복원 / D-Day 추천 섹션 / weekly actions 계산을 화면에 연결한다.
+- `lib/checklist-domain.ts`가 `content/checklist/items.json` 기반 selector, D-Day 계산, 추천 섹션, weekly actions 계산을 제공한다.
+- `lib/papa-context.ts`, `lib/checklist-storage.ts`가 checklist/admin 공용 입력값과 localStorage 키 계약을 구현한다.
+- `components/papa/share-dock.tsx`는 모바일 기본형 `single primary CTA + share sheet` 패턴을 구현하고, `components/papa/checklist-item-card.tsx`는 실제 체크 상태를 props로 받는 구조로 바뀌었다.
+- `lib/admin-timeline-domain.ts`가 `content/policy/benefits.json` 기반 national filter, `due_offset_days` deadline bucket, metadata mapping을 제공한다.
+- `components/papa/admin-timeline-card.tsx`는 정책 메타데이터와 legacy `DeadlineItem` 호환 표시를 모두 처리한다.
 
 ### 11-2. working assumptions
 
-- 현 시점 구현은 checklist/admin 모두 `content/checklist/items.json`, `content/policy/benefits.json`이 아니라 `lib/papa-data.ts` 데모 데이터를 읽는 중간 단계다.
-- wireframe 순서와 CTA 위치를 먼저 맞춘 뒤, 실제 seed/data contract 직결과 계산 로직을 후속 closeout에서 마감하려는 흐름으로 해석하는 것이 가장 안전하다.
-- 하단 CTA 패턴은 이미 공용화됐으므로, 남은 핵심 리스크는 UI shell보다 `상태 계산`, `데이터 직결`, `딥링크 복귀`, `QA 경계값`에 집중돼 있다.
+- checklist/admin의 핵심 acceptance는 현재 main 구현으로 충족됐다고 본다.
+- 따라서 남은 리스크는 T-003/T-004 자체보다 `공유`, `계측`, `launch QA` follow-up에 더 가깝다.
 
-### 11-3. open questions / blockers
+### 11-3. open questions / carry-forward items
 
-- `T-003`: 온보딩 입력 시트, localStorage 복원, `delivery_status + base_date` 기반 D-Day 계산, 추천 섹션 계산, weekly action selector가 아직 acceptance 기준으로 닫히지 않았다.
-- `T-003`: `ChecklistItemCard`가 아직 `socialProof`를 그대로 노출하므로 MVP 비노출 원칙과 충돌한다.
-- `T-004`: `due_offset_days`/`days_remaining` 계산, `DeadlineAlertCard`, `행정 데드라인 공유 카드`, admin 전용 share payload는 아직 코드 증거가 없다.
-- `T-004`: `#admin` anchor fallback과 온보딩 후 admin 탭 복귀는 문서 기준만 있고 구현 증거는 없다.
+- `T-005`: 실제 Kakao SDK 공유, 이미지 저장, 링크 복사 fallback, share payload 정리
+- `T-008`: checklist/admin CTA와 share 이벤트 GA4 연결
+- `T-010`: 카카오 인앱 브라우저, `?tab=admin` / `#admin`, mobile sticky CTA 실기기 QA
 
 ### 11-4. QA carry-forward notes
 
@@ -295,15 +294,15 @@
 
 ### readiness 변화
 
-- `T-003`은 wireframe + copy + seed checklist 데이터 + 공통 상태 키가 연결되어 구현 착수 가능 상태다.
-- `T-004`는 wireframe + policy seed + 메타데이터 입력 규칙 + 딥링크 기준이 연결되어 구현 착수 가능 상태다.
-- 두 티켓 모두 아직 남은 리스크는 있지만, 상위 결정 미정 때문에 막히는 상태는 아니다.
+- `T-003`은 route integration, state/storage 복원, checklist seed 연결, weekly action 계산까지 main에 반영되어 로컬 문서 기준 `done`이다.
+- `T-004`는 admin seed selector, national filter, deadline bucket, metadata card surface까지 main에 반영되어 로컬 문서 기준 `done`이다.
+- 두 티켓 모두 상위 결정 미정으로 막히는 상태는 아니다. 남은 리스크는 follow-up ticket으로 이동한다.
 
 ### 남은 리스크
 
-1. `open_question` 정책 항목의 배포 노출 처리 규칙 필요
-2. sticky CTA가 모바일 조작 영역을 가리지 않도록 실제 UI 높이 검증 필요
-3. admin 메타데이터 노출이 카드 밀도를 높일 수 있어 접힘/툴팁/하단 고정 중 하나를 선택해야 함
+1. 실제 공유 fallback과 Kakao 인앱 브라우저 동작은 아직 미검증
+2. analytics wiring이 없어 launch 기준 행동 데이터가 비어 있음
+3. sticky CTA와 admin 딥링크는 실기기 QA에서 추가 확인이 필요함
 
 ## 13. 참고 파일 경로
 
