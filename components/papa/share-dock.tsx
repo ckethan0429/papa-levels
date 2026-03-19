@@ -17,40 +17,39 @@ export function ShareDock({
       aria-label="공유 도크"
       className="fixed bottom-0 left-0 right-0 z-30"
     >
-      {sheetOpen && (
-        <div id="share-sheet" className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="rounded-t-[24px] border border-b-0 border-ink/10 bg-white/98 px-4 pb-3 pt-4 shadow-panel backdrop-blur-md">
-            <div className="mb-3 space-y-1">
-              <p className="text-sm font-semibold text-ink">{title}</p>
-              <p className="line-clamp-2 text-sm text-ink/62">{message}</p>
-            </div>
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-              <button
-                type="button"
-                className="rounded-2xl bg-ink px-4 py-3 text-sm font-medium text-paper transition hover:bg-ink/90 active:scale-[0.98]"
-              >
-                카카오 공유
-              </button>
-              <button
-                type="button"
-                className="rounded-2xl bg-ember px-4 py-3 text-sm font-medium text-paper transition hover:bg-ember/90 active:scale-[0.98]"
-              >
-                이미지 저장
-              </button>
-              <button
-                type="button"
-                className="col-span-2 rounded-2xl border border-ink/12 bg-white px-4 py-3 text-sm font-medium text-ink transition hover:border-ink/24 hover:bg-mist active:scale-[0.98] sm:col-span-1"
-              >
-                링크 복사
-              </button>
-            </div>
+      {/* Always in DOM so aria-controls resolves; hidden attr removes from a11y tree when closed */}
+      <div id="share-sheet" hidden={!sheetOpen} className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="max-h-[60vh] overflow-y-auto rounded-t-[24px] border border-b-0 border-ink/10 bg-white/98 px-4 pb-3 pt-4 shadow-panel backdrop-blur-md">
+          <div className="mb-3 space-y-1">
+            <p className="text-sm font-semibold text-ink">{title}</p>
+            <p className="line-clamp-2 text-sm text-ink/62">{message}</p>
+          </div>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+            <button
+              type="button"
+              className="rounded-2xl bg-ink px-4 py-3 text-sm font-medium text-paper transition hover:bg-ink/90 active:scale-[0.98]"
+            >
+              카카오 공유
+            </button>
+            <button
+              type="button"
+              className="rounded-2xl bg-ember px-4 py-3 text-sm font-medium text-paper transition hover:bg-ember/90 active:scale-[0.98]"
+            >
+              이미지 저장
+            </button>
+            <button
+              type="button"
+              className="col-span-2 rounded-2xl border border-ink/12 bg-white px-4 py-3 text-sm font-medium text-ink transition hover:border-ink/24 hover:bg-mist active:scale-[0.98] sm:col-span-1"
+            >
+              링크 복사
+            </button>
           </div>
         </div>
-      )}
+      </div>
 
       <div
         className="border-t border-ink/8 bg-white/96 backdrop-blur-md"
-        style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+        style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
       >
         <div className="mx-auto max-w-6xl px-4 py-3 sm:px-6">
           <button

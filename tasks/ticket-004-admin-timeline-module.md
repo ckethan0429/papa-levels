@@ -1,6 +1,6 @@
 # T-004 Admin Timeline Module
 
-- Status: `todo`
+- Status: `doing`
 - Priority: `P0`
 - Phase: `MVP Week 2`
 - Depends on: `T-001`, `T-002`
@@ -9,6 +9,22 @@
 ## Goal
 
 체크리스트 내부에서 `행정/지원금 마스터 타임라인`을 독립된 탭/모듈로 제공한다.
+
+## Current Implementation Status (2026-03-19)
+
+### 검증된 사실
+
+- `/checklist?tab=admin` deep link와 admin timeline card surface가 main branch에 반영됐다.
+- `app/checklist/page.tsx`가 `searchParams.tab`으로 admin branch를 활성화하고, 상단에 `원스톱 추천 순서` 블록을 먼저 렌더링한다.
+- `components/papa/admin-timeline-card.tsx`가 정책 메타데이터(`effective_date`, `verified_at`, `region_scope`, `region_notice`)를 카드 UI에서 표시할 수 있는 구조를 갖고 있다.
+- 전국 기준(`regionScope === "전국"`)만 노출하는 helper와 boundary QA 메모가 문서에 반영됐다.
+
+### 아직 남은 범위
+
+- 현재 admin timeline은 여전히 `lib/papa-data.ts`의 데모 데이터 의존이 크고, `content/policy/benefits.json` 직결이 완결되지 않았다.
+- `DeadlineAlertCard` 분리 블록, `due_offset_days` 기반 deadline bucket 계산, action/share payload 연결은 acceptance 기준으로 추가 마감이 필요하다.
+- `#admin` hash fallback, localStorage 기반 공용 입력값 복귀, `행정 데드라인 공유 카드`는 아직 실제 구현 증거가 없다.
+- 따라서 구현은 시작되었지만 로컬 문서 상태는 `done`이 아니라 `doing`으로 유지한다.
 
 ## Lock Proposal
 
@@ -275,3 +291,22 @@ type AdminDeadlineActionCard = {
 - `due_offset_days` 기준으로 기한 임박/지남 상태가 계산된다.
 - 액션 카드/공유에 재사용 가능한 형태로 데이터가 정리된다.
 - [checklist-admin.md](/Users/ckahn/Desktop/papa/research/wireframes/checklist-admin.md)의 상단 블록 순서와 CTA 위치가 구현 기준으로 연결된다.
+
+## Acceptance Evidence Snapshot (2026-03-19)
+
+| Acceptance 기준 | 현재 증거 | 판정 |
+|---|---|---|
+| `/checklist?tab=admin` + `#admin` 동일 모듈 문서화 | `?tab=admin` deep link는 `app/checklist/page.tsx`에서 동작한다. `#admin` 처리 로직은 아직 코드 증거가 없다. | partial |
+| `/checklist` 내부 즉시 접근 | checklist 기본 화면에 `행정 탭 바로 열기` 링크가 있고, 탭 바의 `admin` 항목도 동일 route를 가리킨다. | pass |
+| `effective_date`, `verified_at`, `region_scope` 표시 | `AdminTimelineCard`가 `기준일`, `최종 검수`, `지역 범위`를 렌더링한다. | pass |
+| 지역 안내문구 + 일반 기준 노출 | `AdminTimelineCard` 하단 notice block에서 `regionNotice`와 `regionScope`를 함께 보여준다. | pass |
+| `due_offset_days` 기반 기한 계산 | 현재 `lib/papa-data.ts`는 `dueLabel`/`state` 문자열만 가지고 있고 `due_offset_days` 계산 유틸은 없다. | doing 유지 |
+| 액션 카드/공유 재사용 데이터 정리 | generic `ShareDock`는 있으나, admin deadline용 payload(`item_id`, `deadline_bucket`, `days_remaining`) 연결 증거는 없다. | doing 유지 |
+| wireframe 상단 블록/CTA 위치 연결 | `원스톱 추천 순서 -> 타임라인 카드 -> 하단 ShareDock` 순서는 구현돼 있다. 다만 `DeadlineAlertCard`와 `행정 데드라인 공유 카드` 전용 블록은 빠져 있다. | partial |
+
+## QA Notes (2026-03-19)
+
+- `?tab=admin` 직접 URL은 현재 구현으로 확인 가능하지만, `#admin` anchor fallback은 T-010 실기기 QA 전까지 열어 둔다.
+- `visibleAdminDeadlines = adminDeadlines.filter((item) => item.regionScope === "전국")` helper가 있어 전국 기준 우선 노출 원칙은 지켜지고 있다.
+- `due_offset_days`/`days_remaining` 기반 버킷이 없으므로 `D-Day`, `D-7`, `마감 임박`, `지남` 뱃지 검증은 아직 시작 전 단계다.
+- 하단 공유 CTA는 공용 `ShareDock`를 재사용하므로, admin 카드 펼침/체크 조작과 겹치지 않는지 모바일 실측 QA가 필요하다.

@@ -1,6 +1,6 @@
 # T-003 Checklist Experience and D-Day Flow
 
-- Status: `todo`
+- Status: `doing`
 - Priority: `P0`
 - Phase: `MVP Week 2`
 - Depends on: `T-001`, `T-002`
@@ -9,6 +9,23 @@
 ## Goal
 
 사용자가 출산(예정)일을 입력하면 자신의 시점에 맞는 체크리스트와 할 일을 바로 볼 수 있게 만든다.
+
+## Current Implementation Status (2026-03-19)
+
+### 검증된 사실
+
+- `/checklist` route와 `tab` query 기반 checklist/admin 분기 UI가 main branch에 반영됐다.
+- `app/checklist/page.tsx`에 `ContextSummaryBar -> 이번 주 아빠 할 일 카드 -> 탭 바 -> 체크리스트/admin 분기 -> ShareDock` 순서의 기본 shell이 구현돼 있다.
+- `ShareDock`의 모바일 기본형이 `single primary CTA + share sheet` 구조로 정리됐다.
+- `D+14` 경계는 `center=D-Day~D+13`, `home=D+14~D+30` 기준으로 문서와 UI helper 문구를 sync했다.
+
+### 아직 남은 범위
+
+- 현재 `/checklist`는 여전히 `lib/papa-data.ts` 데모 데이터 의존이 크고, `content/checklist/items.json` 직결이 완료되지 않았다.
+- `DdayHeader`가 하드코딩된 `D-12` 문자열을 사용하고, 기본 탭도 `searchParams.tab` 부재 시 `prepare`로 고정되어 있어 `delivery_status + base_date` 기반 추천 섹션 계산이 아직 연결되지 않았다.
+- 온보딩 입력 시트, localStorage 복원, weekly actions 추출 로직, 진행률 계산이 acceptance 기준으로 완결되지 않았다.
+- `ChecklistItemCard`는 아직 uncontrolled checkbox + `socialProof` 노출 구조라, 실제 체크 저장/진행률/`social proof MVP 비노출` 기준을 충족하지 못한다.
+- 따라서 구현은 시작되었지만 로컬 문서 상태는 `done`이 아니라 `doing`으로 유지한다.
 
 ## Reference Inputs (2026-03-12)
 
@@ -220,6 +237,18 @@
 - [checklist.md](/Users/ckahn/Desktop/papa/research/wireframes/checklist.md)의 정보 구조와 CTA 우선순위가 구현 기준으로 연결된다.
 - seed data 최소 세트가 `prepare`, `center`, `home`, `admin` 4축 모두에서 화면 연결 가능 상태로 문서화된다.
 
+## Acceptance Evidence Snapshot (2026-03-19)
+
+| Acceptance 기준 | 현재 증거 | 판정 |
+|---|---|---|
+| 날짜 입력 후 본인 시점 섹션 진입 | `/checklist` shell은 존재하지만 온보딩 입력 시트와 날짜 입력 UI가 아직 없다. | doing 유지 |
+| `delivery_status` + `base_date` 기반 추천 섹션 계산 | `app/checklist/page.tsx`는 `searchParams.tab`만 읽고, `DdayHeader`는 `D-12` 하드코딩 문구를 사용한다. | doing 유지 |
+| 체크 1개 이상 시 진행률/로컬 유지 | `ChecklistItemCard`에 checkbox는 있으나 state/localStorage/progress 연결이 없다. | doing 유지 |
+| `이번 주 아빠 할 일` 데이터 준비 | `lib/papa-data.ts`의 `weeklyTodos` 데모 배열로 카드 surface는 존재한다. seed selector/우선순위 계산은 아직 없다. | partial |
+| `/checklist?tab=admin` 진입 시 공용 입력값/로컬 상태 유지 | `?tab=admin` deep link 자체는 동작하지만, 공용 입력값과 체크 상태를 저장/복원하는 로직은 아직 없다. | partial |
+| wireframe 정보 구조 + CTA 우선순위 연결 | `ContextSummaryBar`, weekly card, tab nav, 하단 `ShareDock` 조합으로 상단/하단 CTA 구조는 맞춰졌다. 다만 온보딩 선행 흐름은 미구현이다. | partial |
+| 4축 seed data 화면 연결 | 현재 checklist/admin 모두 `lib/papa-data.ts` 데모 데이터에 의존한다. `content/checklist/items.json` 직결 증거는 없다. | doing 유지 |
+
 ## Analytics / QA Hooks
 
 ### 필수 이벤트 연결
@@ -238,6 +267,7 @@
 - 온보딩 후 `tab=admin` 딥링크 복귀가 자연스러운지 확인
 - `이번 주 아빠 할 일` 3개가 모두 완료됐을 때 대체 항목 재계산 규칙을 확인
 - localStorage가 없는 초기 상태/비정상 값에서도 안전하게 기본값으로 복원되는지 확인
+- `social proof` 문구가 checklist 카드에서 제거되거나 운영 전용 메타데이터로만 남는지 확인
 
 ## Remaining Risks
 

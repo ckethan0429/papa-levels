@@ -258,7 +258,40 @@
 - `due_offset_days` 기준으로 `임박`, `오늘`, `지남`이 올바르게 계산된다.
 - 카카오 인앱 브라우저에서도 딥링크 fallback이 깨지지 않도록 별도 QA 대상에 넣는다.
 
-## 11. 현재 readiness 판단
+## 11. Acceptance Evidence Sync (2026-03-19)
+
+이 섹션은 kickoff 스펙 자체를 바꾸는 것이 아니라, 현재 저장소 구현이 어디까지 상위 스펙을 따라왔는지와 왜 `T-003`, `T-004`를 계속 `doing`으로 두는지 증거 기반으로 정리한다.
+
+### 11-1. validated facts
+
+- `app/checklist/page.tsx`는 `ContextSummaryBar -> 이번 주 아빠 할 일 카드 -> 탭 바 -> checklist/admin 분기 -> ShareDock` 순서의 기본 shell을 갖췄다.
+- `components/papa/share-dock.tsx`는 모바일 기본형 `single primary CTA + share sheet` 패턴을 구현하고 있다.
+- `app/checklist/page.tsx`의 `?tab=admin` 분기가 살아 있어 admin deep link 진입 surface는 이미 보인다.
+- `lib/papa-data.ts`의 `visibleAdminDeadlines` helper가 `regionScope === "전국"` 항목만 노출해 MVP 첫 단계의 national 우선 원칙을 따르고 있다.
+- `components/papa/admin-timeline-card.tsx`는 `channel`, `effectiveDate`, `verifiedAt`, `regionScope`, `regionNotice`를 카드에 표시한다.
+
+### 11-2. working assumptions
+
+- 현 시점 구현은 checklist/admin 모두 `content/checklist/items.json`, `content/policy/benefits.json`이 아니라 `lib/papa-data.ts` 데모 데이터를 읽는 중간 단계다.
+- wireframe 순서와 CTA 위치를 먼저 맞춘 뒤, 실제 seed/data contract 직결과 계산 로직을 후속 closeout에서 마감하려는 흐름으로 해석하는 것이 가장 안전하다.
+- 하단 CTA 패턴은 이미 공용화됐으므로, 남은 핵심 리스크는 UI shell보다 `상태 계산`, `데이터 직결`, `딥링크 복귀`, `QA 경계값`에 집중돼 있다.
+
+### 11-3. open questions / blockers
+
+- `T-003`: 온보딩 입력 시트, localStorage 복원, `delivery_status + base_date` 기반 D-Day 계산, 추천 섹션 계산, weekly action selector가 아직 acceptance 기준으로 닫히지 않았다.
+- `T-003`: `ChecklistItemCard`가 아직 `socialProof`를 그대로 노출하므로 MVP 비노출 원칙과 충돌한다.
+- `T-004`: `due_offset_days`/`days_remaining` 계산, `DeadlineAlertCard`, `행정 데드라인 공유 카드`, admin 전용 share payload는 아직 코드 증거가 없다.
+- `T-004`: `#admin` anchor fallback과 온보딩 후 admin 탭 복귀는 문서 기준만 있고 구현 증거는 없다.
+
+### 11-4. QA carry-forward notes
+
+- 경계값 QA: `D-30`, `D-Day`, `D+14`, `D+30`
+- 딥링크 QA: `?tab=admin`, `#admin`, 온보딩 후 admin 복귀
+- 레이아웃 QA: small viewport에서 `ShareDock`가 탭/체크 조작을 가리지 않는지
+- 데이터 QA: `national`만 노출되는지, seed/data contract 직결 후 메타데이터 순서가 유지되는지
+- 정책성 UI QA: `social proof`가 사용자 노출에서 빠지고 운영 메타데이터로만 남는지
+
+## 12. 현재 readiness 판단
 
 ### readiness 변화
 
@@ -272,7 +305,7 @@
 2. sticky CTA가 모바일 조작 영역을 가리지 않도록 실제 UI 높이 검증 필요
 3. admin 메타데이터 노출이 카드 밀도를 높일 수 있어 접힘/툴팁/하단 고정 중 하나를 선택해야 함
 
-## 12. 참고 파일 경로
+## 13. 참고 파일 경로
 
 - `docs/implementation/checklist-admin-ready-spec.md`
 - `tasks/ticket-003-checklist-experience-and-d-day-flow.md`

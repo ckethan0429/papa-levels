@@ -31,7 +31,8 @@ export function PageFrame({
       </a>
       <main
         id="main-content"
-        className="min-h-screen bg-grid-fade"
+        tabIndex={-1}
+        className="min-h-screen bg-grid-fade outline-none"
         style={{ paddingBottom: "calc(5.5rem + env(safe-area-inset-bottom))" }}
       >
         <div className="mx-auto max-w-6xl px-4 pb-10 pt-5 sm:px-6">

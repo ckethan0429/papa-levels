@@ -37,10 +37,14 @@ export function ChecklistItemCard({ item }: { item: ChecklistItem }) {
         </div>
       </dl>
       <div className="mt-4 flex flex-wrap gap-2">
-        <button type="button" className="rounded-full bg-ink px-4 py-2 text-sm font-medium text-paper transition hover:bg-ink/90">
+        <button type="button" className="rounded-full bg-ink px-4 py-3 text-sm font-medium text-paper transition hover:bg-ink/90 active:scale-[0.98]">
           {item.cta}
         </button>
-        <button type="button" className="rounded-full border border-ink/12 bg-paper px-4 py-2 text-sm font-medium text-ink transition hover:border-ink/30">
+        <button
+          type="button"
+          aria-label={`${item.title} - 남편에게 보내기`}
+          className="rounded-full border border-ink/12 bg-paper px-4 py-3 text-sm font-medium text-ink transition hover:border-ink/30 active:scale-[0.98]"
+        >
           남편에게 보내기
         </button>
       </div>
