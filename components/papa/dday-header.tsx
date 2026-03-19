@@ -3,11 +3,13 @@ import { StatusBadge } from "@/components/papa/status-badge";
 export function DdayHeader({
   dday,
   title,
-  detail
+  detail,
+  progressLabel = "42%"
 }: {
   dday: string;
   title: string;
   detail: string;
+  progressLabel?: string;
 }) {
   return (
     <section className="overflow-hidden rounded-[28px] bg-ink px-5 py-5 text-paper shadow-panel">
@@ -21,7 +23,7 @@ export function DdayHeader({
         </div>
         <div className="hidden rounded-[24px] bg-white/8 px-4 py-3 text-right sm:block">
           <p className="text-xs uppercase tracking-[0.28em] text-paper/45">Progress</p>
-          <p className="mt-2 text-3xl font-semibold text-lime">42%</p>
+          <p className="mt-2 text-3xl font-semibold text-lime">{progressLabel}</p>
         </div>
       </div>
     </section>

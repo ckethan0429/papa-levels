@@ -1,6 +1,6 @@
 # T-003 Checklist Experience and D-Day Flow
 
-- Status: `doing`
+- Status: `done`
 - Priority: `P0`
 - Phase: `MVP Week 2`
 - Depends on: `T-001`, `T-002`
@@ -14,18 +14,17 @@
 
 ### 검증된 사실
 
-- `/checklist` route와 `tab` query 기반 checklist/admin 분기 UI가 main branch에 반영됐다.
-- `app/checklist/page.tsx`에 `ContextSummaryBar -> 이번 주 아빠 할 일 카드 -> 탭 바 -> 체크리스트/admin 분기 -> ShareDock` 순서의 기본 shell이 구현돼 있다.
-- `ShareDock`의 모바일 기본형이 `single primary CTA + share sheet` 구조로 정리됐다.
-- `D+14` 경계는 `center=D-Day~D+13`, `home=D+14~D+30` 기준으로 문서와 UI helper 문구를 sync했다.
+- `/checklist` route가 `ChecklistExperienceLoader -> ChecklistExperienceClient` 구조로 전환되어 client-side onboarding/context/storage 흐름을 수용한다.
+- 온보딩 입력(`delivery_status`, `base_date`, `region=한국`, `dual_income`)과 localStorage 기반 복원이 연결되었다.
+- `content/checklist/items.json` 기반 checklist-domain selector, D-Day 계산, 추천 섹션 계산, weekly actions 계산이 화면에 연결되었다.
+- checklist 항목 체크가 진행률과 localStorage에 반영되고, `social proof` 노출 없이 seed 데이터 기반 카드로 렌더링된다.
+- `D+14` 경계는 `center=D-Day~D+13`, `home=D+14~D+30`로 문서와 UI helper 문구를 일치시켰다.
+- 따라서 T-003은 로컬 문서 기준 `done`으로 본다.
 
-### 아직 남은 범위
+### 후속 티켓으로 넘기는 범위
 
-- 현재 `/checklist`는 여전히 `lib/papa-data.ts` 데모 데이터 의존이 크고, `content/checklist/items.json` 직결이 완료되지 않았다.
-- `DdayHeader`가 하드코딩된 `D-12` 문자열을 사용하고, 기본 탭도 `searchParams.tab` 부재 시 `prepare`로 고정되어 있어 `delivery_status + base_date` 기반 추천 섹션 계산이 아직 연결되지 않았다.
-- 온보딩 입력 시트, localStorage 복원, weekly actions 추출 로직, 진행률 계산이 acceptance 기준으로 완결되지 않았다.
-- `ChecklistItemCard`는 아직 uncontrolled checkbox + `socialProof` 노출 구조라, 실제 체크 저장/진행률/`social proof MVP 비노출` 기준을 충족하지 못한다.
-- 따라서 구현은 시작되었지만 로컬 문서 상태는 `done`이 아니라 `doing`으로 유지한다.
+- 공유 payload와 실제 Kakao/image/link fallback 구현은 `T-005`에서 이어서 마감한다.
+- checklist 이벤트 계측과 launch QA는 `T-008`, `T-010` 범위다.
 
 ## Reference Inputs (2026-03-12)
 

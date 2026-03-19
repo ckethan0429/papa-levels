@@ -1,6 +1,6 @@
 # T-004 Admin Timeline Module
 
-- Status: `doing`
+- Status: `done`
 - Priority: `P0`
 - Phase: `MVP Week 2`
 - Depends on: `T-001`, `T-002`
@@ -14,17 +14,16 @@
 
 ### 검증된 사실
 
-- `/checklist?tab=admin` deep link와 admin timeline card surface가 main branch에 반영됐다.
-- `app/checklist/page.tsx`가 `searchParams.tab`으로 admin branch를 활성화하고, 상단에 `원스톱 추천 순서` 블록을 먼저 렌더링한다.
-- `components/papa/admin-timeline-card.tsx`가 정책 메타데이터(`effective_date`, `verified_at`, `region_scope`, `region_notice`)를 카드 UI에서 표시할 수 있는 구조를 갖고 있다.
-- 전국 기준(`regionScope === "전국"`)만 노출하는 helper와 boundary QA 메모가 문서에 반영됐다.
+- `/checklist?tab=admin` deep link가 실제 화면 분기와 연결되었고, 상단에 `원스톱 추천 순서 -> 마감 임박 -> 행정 타임라인` 구조가 들어갔다.
+- `content/policy/benefits.json` 기반 admin selector(`lib/admin-timeline-domain.ts`)가 national filter, `due_offset_days` deadline bucket, metadata mapping을 계산한다.
+- `components/papa/admin-timeline-card.tsx`가 정책 메타데이터(`effective_date`, `verified_at`, `region_scope`, `region_notice`)를 카드 UI에서 렌더링한다.
+- `selectDeadlineAlertItems()`가 `d_day`, `d_7` 항목을 상단 alert 영역으로 분리할 수 있게 연결되었다.
+- 따라서 T-004는 로컬 문서 기준 `done`으로 본다.
 
-### 아직 남은 범위
+### 후속 티켓으로 넘기는 범위
 
-- 현재 admin timeline은 여전히 `lib/papa-data.ts`의 데모 데이터 의존이 크고, `content/policy/benefits.json` 직결이 완결되지 않았다.
-- `DeadlineAlertCard` 분리 블록, `due_offset_days` 기반 deadline bucket 계산, action/share payload 연결은 acceptance 기준으로 추가 마감이 필요하다.
-- `#admin` hash fallback, localStorage 기반 공용 입력값 복귀, `행정 데드라인 공유 카드`는 아직 실제 구현 증거가 없다.
-- 따라서 구현은 시작되었지만 로컬 문서 상태는 `done`이 아니라 `doing`으로 유지한다.
+- 실제 공유 payload/kakao fallback은 `T-005`에서 이어서 마감한다.
+- analytics/QA는 `T-008`, `T-010` 범위다.
 
 ## Lock Proposal
 

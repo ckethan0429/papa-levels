@@ -8,8 +8,8 @@
 |----|----------|------|------|-----------|-----------|
 | T-001 | P0 | done | Foundation / IA / Shared Contracts | 1주차 | - |
 | T-002 | P0 | done | Checklist Data Model and Content Schema | 1주차 | T-001 |
-| T-003 | P0 | doing | Checklist Experience and D-Day Flow | 2주차 | T-001, T-002 |
-| T-004 | P0 | doing | Admin Timeline Module | 2주차 | T-001, T-002 |
+| T-003 | P0 | done | Checklist Experience and D-Day Flow | 2주차 | T-001, T-002 |
+| T-004 | P0 | done | Admin Timeline Module | 2주차 | T-001, T-002 |
 | T-005 | P0 | todo | Share System and Send-to-Husband Flows | 2주차 | T-003, T-004 |
 | T-006 | P1 | todo | Budget Simulator v1 | 3주차 | T-001 |
 | T-007 | P1 | todo | Quiz v1 and Pre-Dad Mode | 3주차 | T-001 |
@@ -28,14 +28,12 @@
   - [items.json](/Users/ckahn/Desktop/papa/content/checklist/items.json)
   - [benefits.json](/Users/ckahn/Desktop/papa/content/policy/benefits.json)
   - [checklist-input-guide.md](/Users/ckahn/Desktop/papa/docs/content/checklist-input-guide.md)
-- `T-003`, `T-004`는 `/checklist` route, admin card surface, share dock polish, boundary QA 메모 반영으로 구현이 시작되었으므로 로컬 상태를 `doing`으로 본다.
-- 단, 두 티켓 모두 아직 seed/data contract 직결과 일부 acceptance 마감이 남아 있으므로 `done`으로 올리지 않는다.
-- `T-003` `doing` 유지 근거 (2026-03-19 sync):
-  - 현재 `app/checklist/page.tsx`에 checklist shell, tab query 분기, 하단 `ShareDock`가 존재한다.
-  - 하지만 온보딩 입력, localStorage, D-Day 추천 섹션 계산, `content/checklist/items.json` 직결, 진행률/weekly action selector가 아직 닫히지 않았다.
-- `T-004` `doing` 유지 근거 (2026-03-19 sync):
-  - 현재 `?tab=admin` deep link, national 우선 필터(`visibleAdminDeadlines`), 정책 메타데이터 카드 surface가 존재한다.
-  - 하지만 `due_offset_days` 기반 deadline bucket, `#admin` fallback, admin deadline share payload, `content/policy/benefits.json` 직결이 아직 닫히지 않았다.
+- `T-003`, `T-004`는 2026-03-19 closeout 기준으로 route integration이 main에 반영되었으므로 로컬 상태를 `done`으로 본다.
+- `T-003` 완료 근거:
+  - `/checklist`에 온보딩 입력, localStorage 기반 context/check 상태 복원, D-Day 추천 섹션 계산, weekly action 카드, seed checklist 렌더링이 연결되었다.
+- `T-004` 완료 근거:
+  - `/checklist?tab=admin`에서 policy seed 기반 national filter, `due_offset_days` deadline bucket, 정책 메타데이터 카드 렌더링이 연결되었다.
+- 두 티켓 이후의 남은 일은 `T-005 Share`, `T-008 Analytics`, `T-010 QA`에서 이어서 마감한다.
 
 ## GitHub Tracking (2026-03-12)
 
@@ -169,9 +167,9 @@
 ## Current Snapshot (2026-03-19)
 
 - 로컬 문서 기준 완료 티켓은 `T-001`, `T-002`다.
-- 현재 진행 중 티켓은 `T-003`, `T-004`다.
-- 다음 실행 큐는 `T-005`, `T-008`이지만, 그 전에 `T-003`, `T-004` acceptance 마감을 이어서 처리해야 한다.
-- 현재 저장소 단계는 `checklist/admin implementation in progress`로 해석한다.
+- 로컬 문서 기준 완료 티켓은 `T-001 ~ T-004`다.
+- 다음 실행 큐는 `T-005`, `T-008`, `T-010`이다.
+- 현재 저장소 단계는 `checklist/admin implementation done -> share/analytics closeout next`로 해석한다.
 - carry-forward QA 메모:
   - `T-003`: `D-30 / D-Day / D+14 / D+30` 경계값, 온보딩 후 `tab=admin` 복귀, sticky CTA 겹침
   - `T-004`: `?tab=admin` vs `#admin`, national-only filtering, `due_offset_days` bucket, 카카오 인앱 딥링크 fallback
