@@ -40,7 +40,13 @@ function PolicyMetaNotice({ item }: { item: AdminTimelineCardItem }) {
   );
 }
 
-export function AdminTimelineCard({ item }: { item: AdminTimelineCardInput }) {
+export function AdminTimelineCard({
+  item,
+  onShare
+}: {
+  item: AdminTimelineCardInput;
+  onShare?: (item: AdminTimelineCardItem) => void;
+}) {
   const viewModel = coerceAdminTimelineCardItem(item);
   const state = getDeadlineBadge(viewModel);
   const amountLabel = viewModel.benefitAmountLabel ?? "필수 행정";
@@ -78,7 +84,12 @@ export function AdminTimelineCard({ item }: { item: AdminTimelineCardInput }) {
         <button type="button" className="rounded-full bg-ink px-4 py-2 text-sm font-medium text-paper transition hover:bg-ink/90">
           자세히 보기
         </button>
-        <button type="button" className="rounded-full border border-ink/12 bg-paper px-4 py-2 text-sm font-medium text-ink transition hover:border-ink/30">
+        <button
+          type="button"
+          onClick={() => onShare?.(viewModel)}
+          disabled={!onShare}
+          className="rounded-full border border-ink/12 bg-paper px-4 py-2 text-sm font-medium text-ink transition hover:border-ink/30 disabled:cursor-not-allowed disabled:opacity-50"
+        >
           행정 데드라인 보내기
         </button>
       </div>

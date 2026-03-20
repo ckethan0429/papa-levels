@@ -1,6 +1,6 @@
 # T-005 Share System and Send-to-Husband Flows
 
-- Status: `todo`
+- Status: `doing`
 - Priority: `P0`
 - Phase: `MVP Week 2`
 - Depends on: `T-003`, `T-004`
@@ -86,3 +86,78 @@
 - 공유 링크에 개인 체크 상태나 개인 식별 정보가 포함되지 않는다.
 - 카카오 인앱 브라우저에서 공유 실패 시 이미지 저장 또는 링크 복사로 fallback 가능하다.
 - [korean-copy-v1.md](/Users/ckahn/Desktop/papa/prompts/korean-copy-v1.md)의 공유 문구와 CTA 문구가 각 화면에 연결된다.
+
+## Closeout Prep (2026-03-19)
+
+### 검증된 사실
+
+- 1차 구현 기준 반영 파일:
+  - `lib/share-domain.ts`
+  - `components/papa/share-dock.tsx`
+  - `components/papa/checklist-experience-client.tsx`
+  - `components/papa/checklist-item-card.tsx`
+  - `components/papa/admin-timeline-card.tsx`
+  - `app/page.tsx`
+  - `app/quiz/page.tsx`
+  - `app/budget/page.tsx`
+- share URL에는 `utm_source`, `utm_medium`, `utm_campaign`, `entry_role`, `surface`, `card_type`만 담고 개인 체크 상태는 넣지 않는다.
+- fallback 순서는 `Kakao SDK -> 이미지 저장 -> 링크 복사`로 유지한다.
+- checklist/admin/budget/quiz에서 route 또는 card 단위 share intent를 모두 만들 수 있다.
+- 2026-03-19 로컬 검증 기준 `npm run lint`, `npm run build`가 통과했다.
+
+### 작업 가설
+
+- 현재 구현은 `T-008 Analytics`에서 `surface`, `card_type`, `entry_role` 이벤트 파라미터를 바로 이어 붙이기 쉬운 형태다.
+- `T-005`를 `done`으로 닫기 전에 실기기 Kakao in-app QA와 env/domain 설정을 먼저 잠그는 편이 안전하다.
+- copy polish는 일부 남아 있지만 blocker보다는 QA closeout 항목에 가깝다.
+
+### 미해결 질문
+
+- `NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY`가 실제 배포/staging 환경에 언제 주입되는가?
+- Kakao Product Link의 `Web domain` 등록 범위를 `papalevel.com`, staging domain까지 어디까지 열 것인가?
+- iOS Kakao in-app에서 링크 복사 우선 안내가 실제로 가장 안정적인지 실기기 확인이 필요하다.
+
+### T-005 Closeout Checklist
+
+#### 1) Env / Kakao Console
+
+- [ ] `NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY`를 배포/staging 환경에 설정
+- [ ] Kakao Developers의 JavaScript key / SDK domain 등록 확인
+- [ ] Kakao Developers `Product Link > Web domain`에 실제 공유 링크 도메인 등록
+- [ ] staging domain을 별도 검증할지 결정
+
+참고:
+- Getting started: https://developers.kakao.com/docs/latest/en/javascript/getting-started
+- Security guideline: https://developers.kakao.com/docs/latest/en/getting-started/security-guideline
+- Kakao Talk Share JS: https://developers.kakao.com/docs/latest/ko/kakaotalk-share/js-link
+
+#### 2) Manual QA
+
+- [ ] `/`에서 첫 공유 시나리오 sheet open / share action 확인
+- [ ] `/checklist`에서 이번 주 할 일 공유 확인
+- [ ] `/checklist` item-level `남편에게 보내기` 확인
+- [ ] `/checklist?tab=admin` 행정 데드라인 공유 확인
+- [ ] `/budget` 결과 공유 CTA 확인
+- [ ] `/quiz` 결과 공유 CTA 확인
+- [ ] 공유 URL에 개인 체크 상태가 없는지 확인
+- [ ] `entry_role=mom|dad` 전환에 따라 share text / URL이 바뀌는지 확인
+
+#### 3) Kakao In-App Browser QA
+
+- [ ] Android Kakao in-app: Kakao share 기본 동작 확인
+- [ ] Android Kakao in-app: Kakao 실패 시 이미지 저장 / 링크 복사 fallback 확인
+- [ ] iOS Kakao in-app: 링크 복사 우선 안내 노출 확인
+- [ ] iOS Kakao in-app: 이미지 저장 보조 fallback 확인
+
+#### 4) Done Gate
+
+- [ ] Kakao key/domain 설정 완료
+- [ ] iOS/Android 실기기 QA 최소 1회씩 완료
+- [ ] share URL 검토표 작성
+- [ ] `T-008` analytics wiring handoff 준비
+
+### Next Handoff
+
+- 다음 연결 티켓은 `T-008 Analytics and Attribution`이다.
+- `T-008`에서 우선 붙일 파라미터는 `surface`, `card_type`, `entry_role`, `share_method`, `target_route`다.
+- `send_to_husband_click`, `action_card_share`, `cta_click`을 `T-005` share surface 기준으로 연결한다.

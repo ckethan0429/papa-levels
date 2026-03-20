@@ -1,6 +1,6 @@
 # T-006 Budget Simulator v1
 
-- Status: `todo`
+- Status: `doing`
 - Priority: `P1`
 - Phase: `MVP Week 3`
 - Depends on: `T-001`
@@ -77,3 +77,33 @@
 - 결과에서 체크리스트/행정 모듈로 이동 가능
 - [budget.md](/Users/ckahn/Desktop/papa/research/wireframes/budget.md)의 단계 구조와 CTA 우선순위가 구현 기준으로 연결된다.
 - 결과 화면에 `지역에 따라 달라질 수 있음` 안내와 `기준일/최종 검수일` 노출 방침이 반영된다.
+
+## Closeout Prep (2026-03-19)
+
+### 검증된 사실
+
+- 1차 구현 기준 반영 파일:
+  - `app/budget/page.tsx`
+  - `lib/budget-domain.ts`
+  - `components/papa/budget-running-total-card.tsx`
+  - `components/papa/budget-category-section.tsx`
+  - `components/papa/context-summary-bar.tsx`
+  - `components/papa/result-card-surface.tsx`
+- 현재 `/budget`은 `Step 1 기본 입력 -> Step 2 항목 선택 -> Step 3 결과` 3단 흐름으로 동작한다.
+- 지원금 차감 로직과 결과 share intent는 기존 `T-005` share layer를 재사용한다.
+- 2026-03-19 로컬 검증 기준 `npm run lint`, `npm run build`가 통과했다.
+
+### 작업 가설
+
+- 현재 구현은 MVP 계산기/receipt 흐름의 골격을 충족하지만, 금액/copy polish와 정책 운영 연결은 `T-009`, `T-010`에서 함께 닫는 편이 효율적이다.
+- `ContextSummaryBar` 수정 CTA와 long-scroll QA가 closeout 핵심 리스크다.
+
+### 미해결 질문
+
+- `region`을 현재 UI처럼 다중 선택으로 둘지, MVP 운영 기준대로 `한국` 고정에 더 가깝게 잠글지 다시 확인이 필요하다.
+- 실제 운영 기준의 지원금 수치/문구는 `T-009` 정책 운영 lane에서 재검수해야 한다.
+
+### Next Handoff
+
+- 다음 연결 티켓은 `T-008 Analytics and Attribution`, `T-009 Policy and Support Data Operations`, `T-010 Launch QA and Release Checklist`다.
+- `budget_start`, `budget_complete`, `budget_share`, `cta_click` 이벤트를 `T-008`에서 우선 연결한다.

@@ -28,11 +28,13 @@ function getPrimaryCtaLabel(item: ChecklistItem) {
 export function ChecklistItemCard({
   item,
   checked,
-  onCheckedChange
+  onCheckedChange,
+  onShare
 }: {
   item: ChecklistItem;
   checked: boolean;
   onCheckedChange: () => void;
+  onShare?: () => void;
 }) {
   return (
     <article className="rounded-[24px] border border-ink/10 bg-white px-4 py-4 shadow-card">
@@ -71,8 +73,10 @@ export function ChecklistItemCard({
         </button>
         <button
           type="button"
+          onClick={onShare}
+          disabled={!onShare}
           aria-label={`${item.title} - 남편에게 보내기`}
-          className="rounded-full border border-ink/12 bg-paper px-4 py-3 text-sm font-medium text-ink transition hover:border-ink/30 active:scale-[0.98]"
+          className="rounded-full border border-ink/12 bg-paper px-4 py-3 text-sm font-medium text-ink transition hover:border-ink/30 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
         >
           남편에게 보내기
         </button>

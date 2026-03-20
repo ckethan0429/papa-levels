@@ -20,6 +20,7 @@ import {
 import {
   getChecklistItems,
   selectChecklistDomain,
+  type ChecklistItem,
   type ChecklistSection
 } from "@/lib/checklist-domain";
 import {
@@ -35,6 +36,7 @@ import {
   writeStoredActiveTab,
   writeStoredAppContext
 } from "@/lib/checklist-storage";
+import { type ShareIntentState } from "@/lib/share-domain";
 import { cn } from "@/lib/utils";
 
 const tabMeta: Record<PapaChecklistTab, { label: string; helper: string }> = {
@@ -83,6 +85,87 @@ function getProgressLabel(checkedIds: string[]) {
   return `${Math.round((completed / total) * 100)}%`;
 }
 
+function buildWeeklyActionShareIntent(weeklyBullets: string[], activeSection: ChecklistSection): ShareIntentState {
+  return {
+    surface: "checklist",
+    card_type: "weekly_action",
+    route: "/checklist",
+    title: "이번 주 아빠 할 일",
+    description: `${tabMeta[activeSection].label} 구간에서 먼저 해야 할 실행 카드입니다.`,
+    lines: weeklyBullets,
+    messageByRole: {
+      mom: "여보, 이번 주에 이것만 해줘 👶",
+      dad: "이번 주 아빠 할 일을 정리해봤어요 👶"
+    },
+    ctaLabel: "이번 주 할 일 보기",
+    imageEyebrow: "WEEKLY ACTION"
+  };
+}
+
+function buildChecklistItemShareIntent(item: ChecklistItem): ShareIntentState {
+  const shouldDeepLinkAdmin = item.deeplink_target === "/checklist?tab=admin";
+
+  return {
+    surface: "checklist",
+    card_type: "weekly_action",
+    route: "/checklist",
+    query: shouldDeepLinkAdmin ? { tab: "admin" } : undefined,
+    title: item.title,
+    description: item.why,
+    lines: [`언제: ${item.when_label}`, `예산: ${item.cost_range ?? "미정"}`, item.share_copy],
+    messageByRole: {
+      mom: shouldDeepLinkAdmin ? `여보, ${item.title} 행정 먼저 확인해줘 👶` : `여보, ${item.title} 먼저 해줘 👶`,
+      dad: shouldDeepLinkAdmin ? `${item.title} 행정 타임라인 먼저 확인해보세요 👶` : `${item.title} 확인해보세요 👶`
+    },
+    ctaLabel: shouldDeepLinkAdmin ? "행정 탭 보기" : "체크리스트 보기",
+    imageEyebrow: "CHECKLIST ACTION"
+  };
+}
+
+function getAdminDeadlineShareMessage(item: AdminTimelineCardItem) {
+  const deadlineSummary = item.dueLabel.split("·").at(1)?.trim() ?? item.dueLabel.trim();
+  return `여보, ${item.title} ${deadlineSummary}. 지금 해야 해 →`;
+}
+
+function buildAdminShareIntent(item: AdminTimelineCardItem | undefined): ShareIntentState {
+  if (!item) {
+    return {
+      surface: "admin",
+      card_type: "admin_deadline",
+      route: "/checklist",
+      query: { tab: "admin" },
+      title: "행정 데드라인",
+      description: "출생신고와 행복출산 원스톱을 먼저 확인하세요.",
+      lines: ["/checklist?tab=admin 딥링크", "기한 기반 실행 가이드"],
+      messageByRole: {
+        mom: "여보, 출생 직후 행정 먼저 확인해줘 →",
+        dad: "행정 데드라인을 먼저 정리해보세요 →"
+      },
+      ctaLabel: "행정 탭 열기",
+      imageEyebrow: "ADMIN DEADLINE"
+    };
+  }
+
+  return {
+    surface: "admin",
+    card_type: "admin_deadline",
+    route: "/checklist",
+    query: { tab: "admin" },
+    title: item.title,
+    description: item.dueLabel,
+    lines: [
+      `채널: ${item.applicationChannel ?? "신청 채널 확인"}`,
+      `안내: ${item.metadata.regionNotice}`
+    ],
+    messageByRole: {
+      mom: item.shareCopy?.trim().length ? `${item.shareCopy} →` : getAdminDeadlineShareMessage(item),
+      dad: `${item.title} 마감 전에 확인해보세요 →`
+    },
+    ctaLabel: "행정 타임라인 보기",
+    imageEyebrow: "ADMIN DEADLINE"
+  };
+}
+
 export function ChecklistExperienceClient({
   requestedTab
 }: {
@@ -117,6 +200,8 @@ export function ChecklistExperienceClient({
   const [checkedItemIds, setCheckedItemIds] = useState<string[]>(initialSnapshot.checkedItemIds);
   const [activeTab, setActiveTab] = useState<PapaChecklistTab>(initialSnapshot.activeTab);
   const [isEditingContext, setIsEditingContext] = useState(false);
+  const [selectedShareIntent, setSelectedShareIntent] = useState<ShareIntentState | null>(null);
+  const [shareSelectionNonce, setShareSelectionNonce] = useState(0);
 
   useEffect(() => {
     writeStoredAppContext(context);
@@ -165,8 +250,21 @@ export function ChecklistExperienceClient({
 
   const activeSection = checklistDomain?.activeSection ?? activeTab;
   const headerCopy = getHeaderCopy(activeSection);
-  const weeklyBullets =
-    checklistDomain?.weeklyAction.items.map((item) => item.title) ?? ["기준일을 입력하면 이번 주 아빠 할 일을 계산합니다."];
+  const weeklyBullets = useMemo(
+    () =>
+      checklistDomain?.weeklyAction.items.map((item) => item.title) ?? ["기준일을 입력하면 이번 주 아빠 할 일을 계산합니다."],
+    [checklistDomain]
+  );
+
+  const defaultShareIntent = useMemo(() => {
+    if (activeTab === "admin") {
+      return buildAdminShareIntent(deadlineAlertItems[0] ?? adminItems[0]);
+    }
+
+    return buildWeeklyActionShareIntent(weeklyBullets, activeSection);
+  }, [activeSection, activeTab, adminItems, deadlineAlertItems, weeklyBullets]);
+
+  const shareIntent = selectedShareIntent ?? defaultShareIntent;
 
   function updateQuery(nextTab: PapaChecklistTab) {
     const nextParams = new URLSearchParams(searchParams.toString());
@@ -176,6 +274,7 @@ export function ChecklistExperienceClient({
 
   function handleTabChange(nextTab: PapaChecklistTab) {
     setActiveTab(nextTab);
+    setSelectedShareIntent(null);
     updateQuery(nextTab);
   }
 
@@ -185,6 +284,11 @@ export function ChecklistExperienceClient({
         ? currentIds.filter((currentId) => currentId !== itemId)
         : [...currentIds, itemId]
     );
+  }
+
+  function openShareIntent(intent: ShareIntentState) {
+    setSelectedShareIntent(intent);
+    setShareSelectionNonce((current) => current + 1);
   }
 
   function handleContextSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -345,6 +449,13 @@ export function ChecklistExperienceClient({
               >
                 행정 탭 보기
               </button>
+              <button
+                type="button"
+                onClick={() => openShareIntent(buildWeeklyActionShareIntent(weeklyBullets, activeSection))}
+                className="rounded-full border border-ink/12 bg-paper px-4 py-2 text-sm font-medium text-ink transition hover:border-ink/30"
+              >
+                이번 주 할 일 보내기
+              </button>
             </div>
           }
         />
@@ -357,13 +468,22 @@ export function ChecklistExperienceClient({
           <p className="mt-3 text-sm leading-6 text-ink/68">
             {deadlineAlertItems[0]?.dueLabel ?? "admin 탭은 별도 페이지가 아니라 deep link로 바로 들어가는 first-class 모듈입니다."}
           </p>
-          <button
-            type="button"
-            onClick={() => handleTabChange("admin")}
-            className="mt-5 inline-flex rounded-full bg-ember px-4 py-2 text-sm font-medium text-paper transition hover:bg-ember/90"
-          >
-            행정 탭 바로 열기
-          </button>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => handleTabChange("admin")}
+              className="inline-flex rounded-full bg-ember px-4 py-2 text-sm font-medium text-paper transition hover:bg-ember/90"
+            >
+              행정 탭 바로 열기
+            </button>
+            <button
+              type="button"
+              onClick={() => openShareIntent(buildAdminShareIntent(deadlineAlertItems[0] ?? adminItems[0]))}
+              className="rounded-full border border-ink/12 bg-paper px-4 py-2 text-sm font-medium text-ink transition hover:border-ink/30"
+            >
+              행정 마감 보내기
+            </button>
+          </div>
         </article>
       </section>
 
@@ -422,7 +542,7 @@ export function ChecklistExperienceClient({
             </article>
           )}
           {adminItems.map((item) => (
-            <AdminTimelineCard key={item.id} item={item} />
+            <AdminTimelineCard key={item.id} item={item} onShare={(selectedItem) => openShareIntent(buildAdminShareIntent(selectedItem))} />
           ))}
         </section>
       ) : (
@@ -433,6 +553,7 @@ export function ChecklistExperienceClient({
               item={item}
               checked={checkedItemIds.includes(item.id)}
               onCheckedChange={() => handleChecklistToggle(item.id)}
+              onShare={() => openShareIntent(buildChecklistItemShareIntent(item))}
             />
           ))}
         </section>
@@ -440,7 +561,10 @@ export function ChecklistExperienceClient({
 
       <ShareDock
         title="남편에게 보내기"
-        message="카카오 공유 > 이미지 저장 > 링크 복사 순서의 fallback을 유지하고, 하단 고정 액션으로 CTA 탐색 비용을 줄입니다."
+        message="카카오 공유 > 이미지 저장 > 링크 복사 순서를 유지하고, 공유 링크에는 개인 체크 상태를 싣지 않습니다."
+        triggerLabel={activeTab === "admin" ? "행정 마감 남편에게 보내기" : "남편에게 보내기"}
+        intent={shareIntent}
+        autoOpenKey={shareSelectionNonce}
       />
     </PageFrame>
   );

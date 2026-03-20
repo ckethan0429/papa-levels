@@ -79,6 +79,14 @@ export function isIsoDateString(value: unknown): value is string {
   return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
 }
 
+export function formatIsoDateLabel(value: unknown): string {
+  if (!isIsoDateString(value)) {
+    return "";
+  }
+
+  return value.split("-").join(".");
+}
+
 export function normalizeAppContext(value: unknown): AppContextState {
   const record = isRecord(value) ? value : {};
 
@@ -124,7 +132,7 @@ export function getContextSummaryItems(context: AppContextState): AppContextSumm
     {
       key: "base_date",
       label: "기준일",
-      value: normalized.base_date || "미입력"
+      value: formatIsoDateLabel(normalized.base_date) || "미입력"
     },
     {
       key: "region",

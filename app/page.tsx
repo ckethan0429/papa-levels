@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import Link from "next/link";
 
 import { PageFrame } from "@/components/papa/page-frame";
@@ -5,8 +9,26 @@ import { ResultCardSurface } from "@/components/papa/result-card-surface";
 import { ShareDock } from "@/components/papa/share-dock";
 import { StatusBadge } from "@/components/papa/status-badge";
 import { landingHighlights, quizResult } from "@/lib/papa-data";
+import { type ShareIntentState } from "@/lib/share-domain";
+
+const landingShareIntent: ShareIntentState = {
+  surface: "checklist",
+  card_type: "weekly_action",
+  route: "/checklist",
+  title: "이번 주 아빠 할 일",
+  description: "남편에게 보내면 바로 움직이게 되는 첫 공유 시나리오입니다.",
+  lines: ["D-Day 기준 실행 카드", "행정 마감 딥링크", "예산 결과 전환 CTA"],
+  messageByRole: {
+    mom: "여보, 이번 주에 이것만 해줘 👶",
+    dad: "이번 주 아빠 할 일부터 확인해보세요 👶"
+  },
+  ctaLabel: "체크리스트 열기",
+  imageEyebrow: "SEND TO HUSBAND"
+};
 
 export default function HomePage() {
+  const [shareOpenKey, setShareOpenKey] = useState(0);
+
   return (
     <PageFrame
       eyebrow="Execution Hub"
@@ -60,7 +82,11 @@ export default function HomePage() {
               >
                 예산 결과 보기
               </Link>
-              <button type="button" className="rounded-full border border-white/14 px-4 py-2 text-sm font-medium text-paper transition hover:bg-white/8">
+              <button
+                type="button"
+                onClick={() => setShareOpenKey((current) => current + 1)}
+                className="rounded-full border border-white/14 px-4 py-2 text-sm font-medium text-paper transition hover:bg-white/8"
+              >
                 카카오 미리보기 확인
               </button>
             </div>
@@ -98,6 +124,8 @@ export default function HomePage() {
       <ShareDock
         title="첫 공유 시나리오"
         message="카카오 공유가 실패하면 이미지 저장, 마지막엔 링크 복사로 빠지도록 하단 액션 도크를 유지합니다."
+        intent={landingShareIntent}
+        autoOpenKey={shareOpenKey}
       />
     </PageFrame>
   );

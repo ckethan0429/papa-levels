@@ -10,9 +10,9 @@
 | T-002 | P0 | done | Checklist Data Model and Content Schema | 1주차 | T-001 |
 | T-003 | P0 | done | Checklist Experience and D-Day Flow | 2주차 | T-001, T-002 |
 | T-004 | P0 | done | Admin Timeline Module | 2주차 | T-001, T-002 |
-| T-005 | P0 | todo | Share System and Send-to-Husband Flows | 2주차 | T-003, T-004 |
-| T-006 | P1 | todo | Budget Simulator v1 | 3주차 | T-001 |
-| T-007 | P1 | todo | Quiz v1 and Pre-Dad Mode | 3주차 | T-001 |
+| T-005 | P0 | doing | Share System and Send-to-Husband Flows | 2주차 | T-003, T-004 |
+| T-006 | P1 | doing | Budget Simulator v1 | 3주차 | T-001 |
+| T-007 | P1 | doing | Quiz v1 and Pre-Dad Mode | 3주차 | T-001 |
 | T-008 | P0 | todo | Analytics and Attribution | 3~4주차 | T-003, T-004, T-005, T-006, T-007 |
 | T-009 | P1 | todo | Policy/Support Data Operations | 3~4주차 | T-002, T-004, T-006 |
 | T-010 | P1 | todo | Launch QA and Release Checklist | 4주차 | T-003, T-004, T-005, T-006, T-007, T-008, T-009 |
@@ -34,6 +34,22 @@
 - `T-004` 완료 근거:
   - `/checklist?tab=admin`에서 policy seed 기반 national filter, `due_offset_days` deadline bucket, 정책 메타데이터 카드 렌더링이 연결되었다.
 - 두 티켓 이후의 남은 일은 `T-005 Share`, `T-008 Analytics`, `T-010 QA`에서 이어서 마감한다.
+- `T-005`는 2026-03-19 기준 로컬 구현이 시작되어 상태를 `doing`으로 올린다.
+- `T-005` 현재 근거:
+  - `lib/share-domain.ts`에 `entry_role`, `surface`, `card_type`, non-personalized share URL, Kakao/image/link helper가 연결되었다.
+  - `components/papa/share-dock.tsx`가 `intent` 기반 share fallback sheet로 교체되었다.
+  - `/`, `/quiz`, `/budget`, `/checklist`, `/checklist?tab=admin`에서 share intent wiring이 연결되었다.
+  - 남은 closeout은 `Kakao key/domain 설정`, `실기기 Kakao in-app QA`, `T-008 analytics wiring`이다.
+- `T-006`, `T-007`은 2026-03-19 team implementation 기준 상태를 `doing`으로 올린다.
+- `T-006` 현재 근거:
+  - `app/budget/page.tsx`가 3-step 예산 흐름으로 교체되었다.
+  - `lib/budget-domain.ts`, `components/papa/budget-running-total-card.tsx`, `components/papa/budget-category-section.tsx`가 추가되었다.
+  - 로컬 기준 `npm run lint`, `npm run build`가 통과했다.
+- `T-007` 현재 근거:
+  - `app/quiz/page.tsx`가 intro -> 5문항 -> pre-dad gate -> result 흐름으로 교체되었다.
+  - `lib/quiz-domain.ts`, `components/papa/quiz-question-stepper.tsx`, `components/papa/quiz-choice-card.tsx`, `components/papa/quiz-result-panel.tsx`가 추가되었다.
+  - 퍼센타일 비교형 노출을 제거하고 예비 아빠 모드/CTA 분기를 연결했다.
+  - 로컬 기준 `npm run lint`, `npm run build`가 통과했다.
 
 ## GitHub Tracking (2026-03-12)
 
@@ -168,8 +184,8 @@
 
 - 로컬 문서 기준 완료 티켓은 `T-001`, `T-002`다.
 - 로컬 문서 기준 완료 티켓은 `T-001 ~ T-004`다.
-- 다음 실행 큐는 `T-005`, `T-008`, `T-010`이다.
-- 현재 저장소 단계는 `checklist/admin implementation done -> share/analytics closeout next`로 해석한다.
+- 다음 실행 큐는 `T-008`, `T-009`, `T-010`이다.
+- 현재 저장소 단계는 `share closeout partial + budget/quiz implementation in progress -> analytics handoff next`로 해석한다.
 - carry-forward QA 메모:
   - `T-003`: `D-30 / D-Day / D+14 / D+30` 경계값, 온보딩 후 `tab=admin` 복귀, sticky CTA 겹침
   - `T-004`: `?tab=admin` vs `#admin`, national-only filtering, `due_offset_days` bucket, 카카오 인앱 딥링크 fallback

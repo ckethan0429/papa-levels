@@ -1,3 +1,10 @@
+import {
+  defaultAppContextState,
+  getContextSummaryItems,
+  mergeAppContext,
+  type AppContextState
+} from "@/lib/papa-context";
+
 export type ChecklistTab = "prepare" | "center" | "home" | "admin";
 
 export type ChecklistItem = {
@@ -27,12 +34,15 @@ export type DeadlineItem = {
   state: DeadlineState;
 };
 
-export const routeContext = [
-  { label: "상태", value: "출산 예정" },
-  { label: "기준일", value: "2026.03.23" },
-  { label: "지역", value: "한국" },
-  { label: "가구", value: "맞벌이" }
-];
+const demoRouteContextState: AppContextState = mergeAppContext(defaultAppContextState, {
+  base_date: "2026-03-23",
+  dual_income: true
+});
+
+export const routeContext = getContextSummaryItems(demoRouteContextState).map(({ label, value }) => ({
+  label,
+  value
+}));
 
 export const weeklyTodos = [
   "정부24 로그인과 출생신고 서류 확인",
@@ -165,7 +175,7 @@ export const budgetSummary = {
   total: "1,246만 원",
   support: "1,420만 원",
   net: "-174만 원",
-  note: "지원금 반영 후에도 현금 흐름 점검은 필요합니다."
+  note: "지원금 반영 후에도 현금 흐름 점검은 필요합니다. 지역 안내와 기준일/최종 검수일은 결과 카드 아래에서 이어집니다."
 };
 
 export const budgetCategories = [
@@ -201,7 +211,7 @@ export const quizResult = {
   grade: "B",
   title: "성장형 아빠",
   summary: "의지는 S급, 스킬은 업데이트 중",
-  percentile: "상위 38%",
+  percentile: "MVP 비노출",
   preDadTitle: "지금 준비하면 되는 아빠"
 };
 
